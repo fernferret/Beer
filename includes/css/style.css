@@ -148,7 +148,7 @@ margin-bottom:10px;
 font-size:20px;
 }
 
-#login input.inputbox, #edit input.inputbox {
+#login input.inputbox, #edit_profile input.inputbox {
 width:400px;
 }
 
@@ -156,7 +156,7 @@ width:400px;
 padding:40px 0;
 }
 
-#register h2, #login h2, #edit h2 {
+#register h2, #login h2, #edit_profile h2 {
 color:#000;
 text-shadow:0 1px 0 #fff;
 font-size:200%;
@@ -175,7 +175,7 @@ display:block;
 padding:20px 0 0;
 }
 
-#register li span, #login li span, #edit li span {
+#register li span, #login li span, #edit_profile li span {
 font-family:"Helvetica Neue", "Helvetica", "Lucida Grande",'Lucida Sans Unicode',Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 text-shadow:0 1px 0 #fff;
 font-size:14px;
@@ -321,3 +321,5 @@ margin-bottom: 10px;
 }
 
 .profile { width: 610px; }
+
+#edit_profile h2 strong {color:red;}

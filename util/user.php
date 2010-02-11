@@ -23,7 +23,8 @@ class User
 		$row = mssql_fetch_assoc($res);
 		$region_id = $row["region_id"];
 		
-		$date_joined = new date();
+		date_default_timezone_set('UTC');
+		$date_joined = date("m/d/y");
 		
 		if(!isValidEmail($email)) {
 			alert("You must enter a valid email address!", FALSE);
@@ -37,16 +38,20 @@ class User
 		mssql_bind($stmt, "@username", $username, SQLVARCHAR);    
 		mssql_bind($stmt, "@password", $password, SQLVARCHAR);    
 		mssql_bind($stmt, "@region_id", $region_id, SQLINT2);    	
-		mssql_bind($stmt, "@date_joined", $date_joined, SQLINT2);    	
+		mssql_bind($stmt, "@date_joined", $date_joined, SQLVARCHAR);    	
 		
 		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
 	
 		/* now execute the procedure */
 		$result = mssql_execute($stmt);
 	
-		if($return == 0)
-			alert("Success!", TRUE);
-		else if($return == 1)
+		if($return == 0) { 
+			$_SESSION['username'] = $username;
+			$_SESSION['logged_in'] = 1;
+			
+			alert("Successfully registered as " . $_SESSION['username'], TRUE);
+			echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
+		} else if($return == 1)
 			alert("You must enter a valid username, password, and email!", FALSE);
 		else if($return == 2)
 			alert("That username is already taken!", FALSE);
@@ -67,14 +72,14 @@ class User
 		mssql_bind($stmt, "@username", $username, SQLVARCHAR);    
 		mssql_bind($stmt, "@newpassword", $password, SQLVARCHAR);    
 		mssql_bind($stmt, "@newregion_id", $region_id, SQLINT2);    	
-		mssql_bind($stmt, "@newpictre", $picture, SQLINT2);    	
+		mssql_bind($stmt, "@newpicture", $picture, SQLINT2);    	
 		
 		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
 	
 		/* now execute the procedure */
 		$result = mssql_execute($stmt);
 		
-		if($return == 0)
+		if($return == 0) 
 			alert("Your profile has been updated!", TRUE);
 		else if($return == 1)
 			alert("You must enter a valid username!", FALSE);

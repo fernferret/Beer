@@ -6,7 +6,7 @@
 ?>
 <div class="container">
     <div class="column span-24">
-    	<div class="page-container column span-16">
+    	<div class="page-container column span-26">
 			<div class="shadow">
 	            <div class="page">
 	                <div id="register">
@@ -22,7 +22,7 @@
 								$region = $_POST['Form_Region'];
 								
 								$user = new User();
-								$user->add_beer_lover($name, $email, $address, $username, $password, $region, $date);
+								$user->add_beer_lover($name, $email, $address, $username, $password, $region);
 							} 
 							?>
 	                        <div>
