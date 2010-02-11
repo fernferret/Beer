@@ -1,6 +1,6 @@
 <?php 
-	include "config.php";
-	include "db.php";
+	include "includes/config.php";
+	include "includes/db.php";
 	include $_TEMPLATE."header.php";
 ?>
 	<div class="container">

@@ -1,10 +1,8 @@
 <?php
-
 //require_once "db.php";
-include "config.php";
+include "includes/config.php";
+include "includes/dbvars.php";
 include "functions.php";
-include "dbvars.php";
-
 
 // Connect to database
 $db = mssql_connect($dbhost, $dbuser, $dbpass)
@@ -23,7 +21,9 @@ class User
 		
 		$res = mssql_query("SELECT * FROM regions WHERE City = '".$region_id."'");
 		$row = mssql_fetch_assoc($res);
-		$region_id = $row['region_id'];
+		$region_id = $row["region_id"];
+		
+		$date_joined = new date();
 		
 		if(!isValidEmail($email)) {
 			alert("You must enter a valid email address!", FALSE);
@@ -37,6 +37,7 @@ class User
 		mssql_bind($stmt, "@username", $username, SQLVARCHAR);    
 		mssql_bind($stmt, "@password", $password, SQLVARCHAR);    
 		mssql_bind($stmt, "@region_id", $region_id, SQLINT2);    	
+		mssql_bind($stmt, "@date_joined", $date_joined, SQLINT2);    	
 		
 		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
 	
@@ -51,6 +52,34 @@ class User
 			alert("That username is already taken!", FALSE);
 		else if($return == 3)
 			alert("That email address is already taken!", FALSE);
+	}
+	
+	function modify_beer_lover($name, $email, $address, $username, $password, $region_id, $picture) {
+		/* prepare the statement */
+		global $db;
+		$proc = "usp_modify_beer_lover";
+		$stmt = mssql_init($proc, $db);
+		
+		/* now bind the parameters to it */
+		mssql_bind($stmt, "@newname", $name, SQLVARCHAR);
+		mssql_bind($stmt, "@newemail", $email, SQLVARCHAR);
+		mssql_bind($stmt, "@newaddress", $address, SQLVARCHAR);    
+		mssql_bind($stmt, "@username", $username, SQLVARCHAR);    
+		mssql_bind($stmt, "@newpassword", $password, SQLVARCHAR);    
+		mssql_bind($stmt, "@newregion_id", $region_id, SQLINT2);    	
+		mssql_bind($stmt, "@newpictre", $picture, SQLINT2);    	
+		
+		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
+	
+		/* now execute the procedure */
+		$result = mssql_execute($stmt);
+		
+		if($return == 0)
+			alert("Your profile has been updated!", TRUE);
+		else if($return == 1)
+			alert("You must enter a valid username!", FALSE);
+		else if($return == 2)
+			alert("Region ID is invalid!", FALSE);
 	}
 	
 	public function login($username, $password) { 

@@ -27,18 +27,3 @@ blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q { quotes: "" ""; }
 
 a img { border: none; }
-
-/* Clearing floats without extra markup
-   Based on How To Clear Floats Without Structural Markup by PiE
-   [http://www.positioniseverything.net/easyclearing.html] */
-
-.clear { display: inline-block; }   
-.clear:after, .container:after {
-  content: "."; 
-  display: block; 
-  height: 0; 
-  clear: both; 
-  visibility: hidden;
-}
-* html .clear { height: 1%; }
-.clear { display: block; }

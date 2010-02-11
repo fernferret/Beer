@@ -1,6 +1,6 @@
 <?php 
-    include "config.php";
-    include "db.php";
+    include "includes/config.php";
+    include "includes/db.php";
     include $_TEMPLATE."header.php";
     include $_UTIL."user.php";
     require_once $_UTIL."functions.php";
@@ -18,7 +18,7 @@
 					} else { 					
 					?>
 					<h2>Login</h2>
-					<form method="post" action="login.php" id="registerform">
+					<form name="login" method="post" action="login.php">
 						<?php
 						if (!empty($_POST['Form_Username']) && !empty($_POST['Form_Password'])) {		
 							$usr = new User();
@@ -28,10 +28,10 @@
 						}
 						?>
 						<ul>
-							<li><label for="Form_Username">Username</label> <input type="text" id="Form_Username" name="Form_Username" value="" class="InputBox"><span>← Letters, numbers, and underscores only, please.</span></li>
-	                        <li><label for="Form_Password">Password</label> <input type="password" id="Form_Password" name="Form_Password" value="" class="InputBox"><span>← Make it a good one.</span></li>
+							<li><label for="Form_Username">Username</label> <input type="text" id="Form_Username" name="Form_Username" value="" class="inputbox"></li>
+	                        <li><label for="Form_Password">Password</label> <input type="password" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
 	                        <br />
-	                 		<li><input type="submit" id="Form_Login" name="Form_Login" value="Login" class="Button"></li>
+	                 		<li><input type="submit" id="Form_Login" name="Form_Login" value="Login" class="button"></li>
                  		</ul>
 					</form>
 					<?php } ?>

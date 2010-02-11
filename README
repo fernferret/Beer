@@ -1,0 +1,32 @@
+sproc todo list:
+	
+	add_beer
+	######add_beer_lover 
+	add_beer_to_vendor
+	add_property
+	add_rating
+	add_vendor
+	######auth_beer_lover
+	find_beer
+	modify_beer
+	######modify_beer_lover
+	modify_property
+	modify_region
+	modify_vendor
+	remove_beer
+	remove_beer_from_vendor
+	remove_beer_lover
+	remove_property
+	remove_rating
+	remove_region
+	remove_vendor
+
+todo list:
+
+	add foreign key to last_username
+	constraints work
+	validation work
+	admin page
+	add properties to table, get them in beer.php
+	beer.php check for invalid id
+	profile.php check for invalid id

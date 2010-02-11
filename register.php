@@ -1,6 +1,6 @@
 <?php 
-    include "config.php";
-    include "db.php";
+    include "includes/config.php";
+    include "includes/db.php";
     include $_TEMPLATE."header.php";
     include $_UTIL."user.php";
 ?>
@@ -11,7 +11,7 @@
 	            <div class="page">
 	                <div id="register">
 	                    <h2>Sign up to get your own Beer account.</h2>
-	                    <form id="Form_Form" method="post" action="register.php">
+	                    <form name="regster" method="post" action="register.php">
 		                    <?php 
 							if (isset($_POST['Form_Register'])) {	
 								$username = $_POST['Form_Username'];
@@ -22,19 +22,19 @@
 								$region = $_POST['Form_Region'];
 								
 								$user = new User();
-								$user->add_beer_lover($name, $email, $address, $username, $password, $region);
+								$user->add_beer_lover($name, $email, $address, $username, $password, $region, $date);
 							} 
 							?>
 	                        <div>
 	                            <ul>
 	                                <div style="float: left; width: 230px;">
-		                            	<li><label for="Form_Name">Name</label> <input type="text" id="Form_Name" name="Form_Name" value="" class="InputBox"><span>← Don't be shy, we don't bite (Stokes does).</span></li>
-	                                    <li><label for="Form_Address">Address</label> <input type="text" id="Form_Address" name="Form_Address" value="" class="InputBox"><span>← A valid address enables our recommendation service.</span></li>
-	                                    <li><label for="Form_Email">Email Address<strong>*</strong></label> <input type="text" id="Form_Email" name="Form_Email" value="" class="InputBox"><span>← We won't share it with anyone, well maybe a few people.</span></li>
+		                            	<li><label for="Form_Name">Name</label> <input type="text" id="Form_Name" name="Form_Name" value="" class="inputbox"></li>
+	                                    <li><label for="Form_Address">Address</label> <input type="text" id="Form_Address" name="Form_Address" value="" class="inputbox"></li>
+	                                    <li><label for="Form_Email">Email Address<strong>*</strong></label> <input type="text" id="Form_Email" name="Form_Email" value="" class="inputbox"></li>
 	                                </div>
 	                                <div style="float: right; width: 230px;">
-	                                    <li><label for="Form_Username">Username<strong>*</strong></label> <input type="text" id="Form_Username" name="Form_Username" value="" class="InputBox"><span>← Letters, numbers, and underscores only, please.</span></li>
-	                                    <li><label for="Form_Password">Password<strong>*</strong></label> <input type="password" id="Form_Password" name="Form_Password" value="" class="InputBox"><span>← Make it a good one.</span></li>
+	                                    <li><label for="Form_Username">Username<strong>*</strong></label> <input type="text" id="Form_Username" name="Form_Username" value="" class="inputbox"></li>
+	                                    <li><label for="Form_Password">Password<strong>*</strong></label> <input type="password" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
 	                                    <li><label for="Form_Region">Region<strong>*</strong></label>
 	                                    <?php
 		                                    echo'<select name="Form_Region">';
@@ -47,7 +47,7 @@
 										?>
 	                                    </li>
 	                                    <br />
-	                             		<li><input type="submit" id="Form_Register" name="Form_Register" value="Register" class="Button"></li>
+	                             		<li><input type="submit" id="Form_Register" name="Form_Register" value="Register" class="button"></li>
 	                                </div>
 									<div class="clear"></div>
 	                            </ul>

@@ -8,9 +8,10 @@
     <meta name="copyright" content="Copyright 2010">
     <meta name="description" content="Beer is a database for rating and finding new beers to enjoy.">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="includes/css/style.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="includes/css/grid.css">
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="includes/css/reset.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="includes/css/style.css">
+
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function($) {  
@@ -30,7 +31,7 @@
 	    		<?php 
 				if (!empty($_SESSION['logged_in']) || !empty($_SESSION['username'])) {
 				?>
-					<li class="profile"><a href="profile.php">Edit Profile</a></li>
+					<li class="edit_profile"><a href="edit_profile.php">Edit Profile</a></li>
 	    			<li class="logout"><a href="logout.php">Logout (<strong><?php echo $_SESSION['username']; ?></strong>)</a></li>
 	 	 		<?php
 	 	 		} else {

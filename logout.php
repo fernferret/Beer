@@ -1,6 +1,6 @@
 <?php 
-	include "config.php";
-	include "db.php";
+	include "includes/config.php";
+	include "includes/db.php";
 	include $_UTIL."user.php";
 
 	$user = new User();
