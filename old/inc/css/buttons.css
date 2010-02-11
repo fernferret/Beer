@@ -1,0 +1,65 @@
+input.button {
+	float:left;
+	border:0;
+	display:inline-block;
+	padding:5px 10px 6px;
+	color:#fff;
+	text-decoration:none;
+	font-weight:bold;
+	line-height:1;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-webkit-box-shadow:0 1px 3px #999;
+	text-shadow:0 -1px 1px #222;
+	border-bottom:1px solid #222;
+	position:relative;
+	cursor:pointer;
+	-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.5);
+	text-shadow:0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom:1px solid rgba(0,0,0,0.25);
+}
+
+input.button:active {
+	top:1px;
+}
+
+
+.small.button {
+	font-size:11px;
+}
+
+.medium.button {
+	font-size:13px;
+}
+
+.large.button {
+	font-size:14px;
+	padding:10px 14px 9px;
+}
+
+button.large.button {
+	font-size:14px;
+	padding:7px 7px 7px 10px;
+	border:0;
+	border-bottom:1px solid rgba(0,0,0,0.25);
+}
+
+/* taken from zurb */
+.disabled.button {
+	background-color:#999;
+}
+.green.button,.green.button:visited {
+	background-color:#91bd09; /*91bd09*/
+}
+
+.green.button:hover {
+	background-color:#749a02;
+}
+
+.red.button,.red.button:visited {
+	background-color:#e33100;
+}
+
+.red.button:hover {
+	background-color:#872300;
+}

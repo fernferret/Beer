@@ -1,0 +1,132 @@
+@import "reset.css";
+
+/* Main */
+html,body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:#eee url("../images/bubbles.jpg") repeat; height:100%; margin:0; overflow-x: hidden; overflow-y: scroll;}
+.wrapper { min-height:100%; margin-bottom:-64px; position:relative;  }
+a { text-decoration:none; color:#000; font-weight:bold; }
+a:hover { color:#666; }
+p { font-size:14px; line-height:22px; margin-bottom:10px; }
+h1 a { background:url(../images/logo.png) no-repeat; width:254px; height:70px; margin-top:25px; text-indent:-9000px; float:left; display:block; z-index:1000; position:relative; overflow:hidden; }
+h1 a:hover { opacity:.9; }
+
+/* Header */
+.header { border-bottom:4px solid #000; background:#111; opacity:.9; height:120px; margin-bottom: 30px;}
+.header ul { float:right; margin-top:50px; list-style-type:none; }
+.header li { float:left; margin-right:40px; }
+.header li.login { margin-right:8px; }
+.header li a { padding:5px; color:#fff; font-size:16px; font-weight:700; }
+.header li a:hover { color:#ddd; }
+
+/* Footer */
+.clearfooter { height:40px; clear:both; }
+.footer { padding-left: 20px; padding-top:20px; border-top:4px solid #000; background:#111; opacity:.9; font-size:11px; color:#eee; height:40px; position:relative; margin: 0 auto; }
+.footer a { color:#fff; }
+.footer strong { color: #666; float: right;}
+
+select { margin-top: 10px; }
+.required {color: red; font-weight: 700;}
+
+/* Page  */
+.shadow{
+  border-bottom: 3px solid #555;
+  border-right: 3px solid #555;
+  background: #555;
+  margin-bottom: 20px;
+  float: left;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+.page-container{
+	margin-top: 25px;
+}
+.page{
+  margin: 0;
+  padding: 20px 40px;
+  background: #fff;
+  margin-top: -5px;
+  margin-left: -5px;
+  padding-right: 70px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+.page p{
+  margin-bottom: 20px;
+}
+.page ul{
+  margin: 20px 0 20px 20px;
+  font-size: 14px;
+  line-height: 24px;
+}
+.page h2{
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+/* Sign Up Form */
+#register, #login {
+   padding: 40px 0;
+}
+#register h2, #login h2 {
+   color: #000;
+   text-shadow:0 1px 0 #fff;
+   font-size: 200%;
+}
+#register ul, #login ul { list-style-type: none; }
+#register strong, #login strong { color: red; font-weight: 700}
+#register label, #login label {
+   padding: 20px 0 0;
+   font-size: 20px;
+   color: #666;
+   font-family: "Helvetica Neue", "Helvetica", "Lucida Grande",'Lucida Sans Unicode',Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+   text-shadow: 0 1px 0 #fff;
+   display: block;
+}
+#register li span, #login li span {
+   font-family: "Helvetica Neue", "Helvetica", "Lucida Grande",'Lucida Sans Unicode',Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+   text-shadow: 0 1px 0 #fff;
+   font-size: 14px;
+   color: #135D77;
+   padding: 0 0 0 10px;
+   display: none;
+}
+input.InputBox, select {
+   font-size: 18px;
+   width: 228px;
+   padding: 6px;
+   border: 1px solid #a4cfe6;
+}
+.FocusColor, input.InputBox:focus {
+   color: #000 !important;
+   background: #fffede !important;
+}
+#register input.Button, #login input.Button {
+   font-weight: bold;
+   color: #fff;
+   text-shadow: 0 -1px 0 #000;
+   font-size: 20px;
+   text-align: center;
+   display: block;
+   border: 0;
+   height: 46px;
+   width: 200px;
+   cursor: pointer;
+  background: url('../images/button.png') left bottom no-repeat;
+
+}
+#register input.Button:hover, #login input.Button:hover {
+   background: url('../images/button.png') right bottom no-repeat;
+}
+div.errors {
+   background: #c00;
+   margin-bottom: 5px;
+   padding: 8px 12px;
+   color: #fff;
+   font-size: 18px;
+   text-shadow: 0 1px 1px #000;
+   -moz-border-radius: 3px;
+   -webkit-border-radius: 3px;
+}
+div.errors.success {
+   background: green;
+}
