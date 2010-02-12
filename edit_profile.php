@@ -36,7 +36,7 @@
                     <h2>Edit your profile, <strong><?php echo $username; ?></strong></h2>
                     <form style="float: left;" name="edit_profile" method="post" action="edit_profile.php">
 	                    <?php 
-						if (isset($_POST['Form_Edit']) && $_POST['Form_Password'] != 0) {	
+						if (isset($_POST['Form_Edit']) && strlen($_POST['Form_Password']) > 0) {	
 							$name = $_POST['Form_Name'];
 							$email = $_POST['Form_Email'];
 							$address = $_POST['Form_Address'];

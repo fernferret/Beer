@@ -1,16 +1,43 @@
 <?php 
 	include "includes/config.php";
 	include "includes/db.php";
+	include "util/adminhelp.php";
 	include $_TEMPLATE."header.php";
 ?>
 	<div class="container">
 		<div class="column span-24">			
-			<div class="shadow">
+			<div class="shadow" style="width:100%">
 				<div class="page" id="browse">
-					<h2>About Beer.</h2>
-					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendreriT IN VULPUTATE VELIT ESSE MOLESTIE CONSEQUAT, VEL ILLUM DOLORE EU FEUGIAT nulla facilisis at vero eros et LOL et iusto odio dignissIM QUI blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. </p>
-					<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. </p>
-					<p>Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+                <h2>Top 10 Beers.</h2>
+					<table>
+                    <th>Beer Name</th>
+                    <th>Average Rating</th>
+                    <th>People who rated this beer</th>
+                    <th>Served By</th>
+					<?php
+					$querystring = "SELECT * FROM view_beer_browser";
+					//echo $querystring;
+					$query = mssql_query($querystring);
+					$result = mssql_fetch_assoc($query);
+					$id = $result["id"];
+					$name = $result["name"];
+					$ratingweight = $result["numofratings"];
+					$rating = $result["rating"];
+					$servedby = $result["servedby"];
+					echo "<tr class=\"topten\"><td><a href=\"beer.php?id=$id\">$name</a></td><td>$rating</td><td>$ratingweight</td><td>$servedby</td></tr>";
+					while ($result = mssql_fetch_assoc($query))
+					{
+						$id = $result["id"];
+						$name = $result["name"];
+						$ratingweight = $result["numofratings"];
+						$rating = $result["rating"];
+						$servedby = $result["servedby"];
+						echo "<tr class=\"topten\"><td><a href=\"beer.php?id=$id\">$name</a></td><td>$rating</td><td>$ratingweight</td><td>$servedby</td></tr>";
+
+					}
+					
+					?>
+                    </table>
 				</div>
 			</div>
 		</div>

@@ -34,8 +34,6 @@
 								$admHelp = new Adminhelp();
 								$admHelp->add_beer_to_vendor($beer, $vendor);
 							} 
-							?>
-	                        <?
                             echo '<fieldset>';
 	                        echo '<select id="beer" name="beer">';
 							$beer_query = mssql_query("SELECT * FROM view_all_beer_names");
@@ -102,9 +100,6 @@
 	                	<label>Remove a beer from a vendor!</label>
 	 					<form id="admin" name="remove_beer_from_vendor" method="post" action="admin.php">
 	                     	<?php 
-							
-							?>
-	                        <?
                             echo '<fieldset>';
 	                        echo '<select id="rbfv_vendor" name="rbfv_vendor" onchange="this.form.submit();">';
 							$query = mssql_query("SELECT DISTINCT vendor, vend_id FROM view_all_beers_at_vendors");
@@ -146,7 +141,7 @@
 								echo "<br /><span class=\"label\">Remove the following beer:</span> ";
 								echo " <select id=\"rbfv_beer\" name=\"rbfv_beer\">";
 								$querystring = "SELECT * FROM view_all_beers_at_vendors WHERE vend_id = '$vendor'";
-								echo $querystring;
+								//echo $querystring;
 								$query = mssql_query($querystring);
 								$result = mssql_fetch_assoc($query);
 								$id = $result["beer_id"];
@@ -253,6 +248,90 @@
 	                        </fieldset>
 	                    </form>
 	                </div>
+                    
+                    
+                    <div class="admin_function">
+	                	<label>Add a new Property!</label>
+	 					<form id="add_new_property" name="add_new_property" method="post" action="admin.php">
+                        <fieldset>
+
+                            
+                            <?php 
+							if (isset($_POST['ap_pname'])) {	
+								$name = $_POST['ap_pname'];
+								$desc = $_POST['ap_pdesc'];
+								
+								$admHelp = new Adminhelp();
+								$admHelp->add_property($name, $desc);
+							}?>
+                            <label for="ap_pname">Name</label>
+                            <input type="text" id="ap_pname" name="ap_pname"  class="inputbox"
+                            <?php echo isset($_POST['ap_pname']) ? "value=\"".$_POST['ap_pname']."\"" : "value=\"\"";?> />
+                           <label for="ap_pdesc">Description</label>
+                            <input type="text" id="ap_pdesc" name="ap_pdesc" class="inputbox" <?php echo isset($_POST['ap_pdesc']) ? "value=\"".$_POST['ap_pdesc']."\"" : "value=\"\"";?> />
+                            
+                                <br /><br />
+                                <input type="submit" value="Add Property" class="button" />
+	                        </fieldset>
+	                    </form>
+	                </div>
+                    <div class="admin_function">
+	                	<label>Add a new Property!</label>
+	 					<form id="modify_property" name="modify_property" method="post" action="admin.php">
+                        <fieldset>
+
+                            
+                            <?php 
+							if (isset($_POST['mp_pid'])) {
+								$id = $_POST['mp_pid'];
+								$name = $_POST['mp_pname'];
+								$desc = $_POST['mp_pdesc'];
+								
+								$admHelp = new Adminhelp();
+								$admHelp->modify_property($id, $name, $desc);
+							}?>
+                            <?php 
+							echo '<select id="mp_pid" name="mp_pid">';
+							$query = mssql_query("SELECT * FROM view_all_properties");
+							$array = mssql_fetch_assoc($query);
+                            if(isset($_POST['mp_pid']) && ($array['id'] == $_POST['mp_pid'])){
+								$id = $array["id"];
+								$value = $array["name"];
+								echo "<option selected=\"selected\" value=\"$id\">$value</option>";
+							}
+							else
+							{
+								$id = $array["id"];
+								$value = $array["name"];
+								echo "<option value=\"$id\">$value</option>";
+							}
+							while ($array = mssql_fetch_assoc($query))
+							{
+								$id = $array["id"];
+								$value = $array["name"];
+								if(isset($_POST['mp_pid']) && ($array['id'] == $_POST['mp_pid'])){
+                               		echo "<option selected=\"selected\" value=\"$id\">$value</option>";
+								}
+								else
+								{
+									echo "<option value=\"$id\">$value</option>";
+								}
+							}
+	                        echo '</select> ';?>
+                            <label for="mp_pname">Name</label>
+                            <input type="text" id="mp_pname" name="mp_pname"  class="inputbox"
+                            <?php echo isset($_POST['mp_pname']) ? "value=\"".$_POST['mp_pname']."\"" : "value=\"\"";?> />
+                           <label for="mp_pdesc">Description</label>
+                            <input type="text" id="mp_pdesc" name="mp_pdesc" class="inputbox" <?php echo isset($_POST['mp_pdesc']) ? "value=\"".$_POST['mp_pdesc']."\"" : "value=\"\"";?> />
+                            
+                                <br /><br />
+                                <input type="submit" value="Modify Property" class="button" />
+	                        </fieldset>
+	                    </form>
+	                </div>
+                    
+                    
+                    
                     
                     
 				</div>

@@ -103,6 +103,51 @@ class Adminhelp
 			alert("You must enter a valid Region", FALSE);
 	}
 	
+	function add_property($name, $desc) {
+		global $db;
+		$proc = "usp_add_property";
+		$stmt = mssql_init($proc, $db);
+		
+		mssql_bind($stmt, "@name", $name, SQLVARCHAR); 
+		mssql_bind($stmt, "@description", $desc, SQLVARCHAR); 
+
+		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
+	
+		/* now execute the procedure */
+		$result = mssql_execute($stmt);
+	
+		if($return == 0) { 
+			alert("Property Successfully Added!", TRUE);
+			//echo '<meta http-equiv="refresh" content="0;admin.php">'; //refresh the page to see if membership worked.
+		} else if($return == 1)
+			alert("You must enter a Property Name!", FALSE);
+		else if($return == 2)
+			alert("A property with that name already exists!", FALSE);
+	}
+	
+	function modify_property($id, $name, $desc) {
+		global $db;
+		$proc = "usp_modify_property";
+		$stmt = mssql_init($proc, $db);
+		
+		mssql_bind($stmt, "@property_id", $id, SQLINT2); 
+		mssql_bind($stmt, "@modname", $name, SQLVARCHAR); 
+		mssql_bind($stmt, "@moddescription", $desc, SQLVARCHAR); 
+
+		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
+	
+		/* now execute the procedure */
+		$result = mssql_execute($stmt);
+	
+		if($return == 0) { 
+			alert("Property Successfully Modified!", TRUE);
+			//echo '<meta http-equiv="refresh" content="0;admin.php">'; //refresh the page to see if membership worked.
+		} else if($return == 1)
+			alert("You must enter a Property to Edit!", FALSE);
+		else if($return == 2)
+			alert("A property with that name already exists!", FALSE);
+	}
+	
 	/*function modify_beer_lover($name, $email, $address, $username, $password, $region_id, $picture) {
 		/* prepare the statement */
 		/*global $db;

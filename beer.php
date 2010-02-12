@@ -102,15 +102,22 @@
 						if(mssql_num_rows($cres) == 0) {
 							echo "<div>No comments on this entry!</div>";
 						}
-						echo "<ul>";
+						else
+						{
+							echo "<ul>";
 						echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+						}
+						
 						while($crow = mssql_fetch_assoc($cres)) {
 							$uname = $crow["username"];
 						$time = $crow["time"];
 						$text = $crow["text"];
 							echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
 						}
-						echo "</ul>";
+						if(mssql_num_rows($cres) != 0) {
+							echo "</ul>";
+						}
+						
 					?>	
 					<form name="comment_submit" method="post" action="beer.php?id=<?php echo $beer_id; ?>">
 						<ul>
