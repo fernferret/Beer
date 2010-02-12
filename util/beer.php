@@ -95,6 +95,8 @@ class Beer
 			alert("Already rated this beer!", FALSE);
 		else if($return==3)
 			alert("Please enter a rating.", FALSE);
+		else if($return==0)
+			echo '<meta http-equiv="refresh" content="0;beer.php?id='.$beer_id.'">';
 		
 	}
 }

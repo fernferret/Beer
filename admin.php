@@ -187,7 +187,8 @@
 								$admHelp->add_vendor($regionid, $type, $name, $address);
 							}?>
                             <label for="av_vaddress">Name</label>
-                            <input type="text" id="av_vname" name="av_vname" value="" />
+                            <input type="text" id="av_vname" name="av_vname"  class="inputbox"
+                            <?php echo isset($_POST['av_vname']) ? "value=\"".$_POST['av_vname']."\"" : "value=\"\"";?> />
                              <label for="av_vtype">Type of Vendor</label>
                             <?php 
 							echo '<select id="av_vtype" name="av_vtype">';
@@ -216,34 +217,33 @@
 	                        echo '</select> ';
 	                       ?>
                            <label for="av_vaddress">Address</label>
-                            <input type="text" id="av_vaddress" name="av_vaddress" />
-                            <label for="av_vaddress">Name</label>
-                            <input type="text" id="av_vname" name="av_vname" />
+                            <input type="text" id="av_vaddress" name="av_vaddress" class="inputbox" <?php echo isset($_POST['av_vaddress']) ? "value=\"".$_POST['av_vaddress']."\"" : "value=\"\"";?> />
+                            <label for="av_regionid">Region</label>
 	                        <?php 
-							echo '<select id="beer" name="beer">';
-							$beer_query = mssql_query("SELECT * FROM view_all_beer_names");
-							$beers_arr = mssql_fetch_assoc($beer_query);
-                            if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){
-								$id = $beers_arr["id"];
-								$beer = $beers_arr['beer'];
-								echo "<option selected=\"selected\" value=\"$id\">$beer</option>";
+							echo '<select id="av_regionid" name="av_regionid">';
+							$query = mssql_query("SELECT * FROM view_all_regions");
+							$array = mssql_fetch_assoc($query);
+                            if(isset($_POST['av_regionid']) && ($array['id'] == $_POST['av_regionid'])){
+								$id = $array["id"];
+								$value = $array['region'];
+								echo "<option selected=\"selected\" value=\"$id\">$value</option>";
 							}
 							else
 							{
-								$id = $beers_arr["id"];
-								$beer = $beers_arr['beer'];
-								echo "<option value=\"$id\">$beer</option>";
+								$id = $array["id"];
+								$value = $array['region'];
+								echo "<option value=\"$id\">$value</option>";
 							}
-							while ($beers_arr = mssql_fetch_assoc($beer_query))
+							while ($array = mssql_fetch_assoc($query))
 							{
-								$id = $beers_arr["id"];
-								$beer = $beers_arr['beer'];
-								if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){
-                               		echo "<option selected=\"selected\" value=\"$id\">$beer</option>";
+								$id = $array["id"];
+								$value = $array['region'];
+								if(isset($_POST['av_regionid']) && ($array['id'] == $_POST['av_regionid'])){
+                               		echo "<option selected=\"selected\" value=\"$id\">$value</option>";
 								}
 								else
 								{
-									echo "<option value=\"$id\">$beer</option>";
+									echo "<option value=\"$id\">$value</option>";
 								}
 							}
 	                        echo '</select> ';

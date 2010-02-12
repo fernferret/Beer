@@ -81,10 +81,26 @@
 			</div>
 		</div>
 		
-		<div class="beers column span-17 append-1">
+		<div class="beers column span-17">
 			<div class="shadow">
 				<div class="page">
-					<h2>Comments</h2>
+					<ul id="comments">
+					<?php						
+						$cres = mssql_query("SELECT * from get_comments_for_beer WHERE beer_id = '".$beer_id."'");
+						$crow = mssql_fetch_assoc($cres);
+						$uname = $crow["username"];
+						$time = $crow["time"];
+						$text = $crow["text"];
+						
+						if(mssql_num_rows($cres) == 0) {
+							echo "<h2>No comments on this entry!</h2>";
+						}
+						
+						for($i=0;$i<mssql_num_rows($cres);$i++) {
+							echo "<li><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+						}
+					?>	
+					</ul>
 					<div class="clearfooter"></div>
 				</div>
 			</div>
