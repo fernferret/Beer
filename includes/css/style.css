@@ -56,7 +56,7 @@ ul.user_attributes li:hover{background-color:#444;}
 #admin .label { font-size:20px;color:#666;font-family:"Helvetica Neue", "Helvetica", "Lucida Grande",'Lucida Sans Unicode',Verdana,Arial,"Bitstream Vera Sans",sans-serif;text-shadow:0 1px 0 #fff;}
 #edit_profile img{margin-bottom:10px}
 #comments ul {}
-#comments li {font-size: 18px; background-color: #f1f1f1; padding: 10px; border-bottom: #ddd 5px solid;}
+.q{font-size: 16px; margin-bottom: 15px; background-color: #f1f1f1; padding: 10px; border-bottom: #ddd 5px solid;}
 .quote {background: #DACD00; color: fff; padding: 11px; border-bottom: 5px solid #B7A700; font-weight: 700; }
 #profile img{margin-right:10px;margin-bottom:10px;background-color:#000;-webkit-border-radius:5px;-moz-border-radius:5px}
 .admin_function{padding: 10px; border-bottom: 5px #eee solid; background-color: #f9f9f9	}

@@ -99,4 +99,25 @@ class Beer
 			echo '<meta http-equiv="refresh" content="0;beer.php?id='.$beer_id.'">';
 		
 	}
+	
+	function add_comment($username, $beer_id, $description) {
+		global $db;
+
+		$proc_prop = "usp_add_comment";
+		$stmt_prop = mssql_init($proc_prop, $db);
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt_prop, "@username", $username, SQLVARCHAR);
+		mssql_bind($stmt_prop, "@beer_id", $beer_id, SQLINT2);    
+		mssql_bind($stmt_prop, "@description", $description, SQLTEXT);    
+		
+		mssql_bind($stmt_prop, "RETVAL", $return, SQLINT2);
+
+		/* now execute the procedure */
+		$result_prop = mssql_execute($stmt_prop);
+		
+		if($return==0)
+			echo '<meta http-equiv="refresh" content="0;beer.php?id='.$beer_id.'">';
+		
+	}
 }

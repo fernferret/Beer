@@ -92,14 +92,33 @@
 						$time = $crow["time"];
 						$text = $crow["text"];
 						
-						if(mssql_num_rows($cres) == 0) {
-							echo "<h2>No comments on this entry!</h2>";
+						if (isset($_POST['comment_submit'])) {
+							$beer = new Beer();
+							$username = $_SESSION["username"];
+							$description = $_POST["Form_Comment"];
+							$beer->add_comment($username, $beer_id, $description);
 						}
 						
-						for($i=0;$i<mssql_num_rows($cres);$i++) {
-							echo "<li><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+						if(mssql_num_rows($cres) == 0) {
+							echo "<div>No comments on this entry!</div>";
 						}
+						echo "<ul>";
+						echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+						while($crow = mssql_fetch_assoc($cres)) {
+							$uname = $crow["username"];
+						$time = $crow["time"];
+						$text = $crow["text"];
+							echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+						}
+						echo "</ul>";
 					?>	
+					<form name="comment_submit" method="post" action="beer.php?id=<?php echo $beer_id; ?>">
+						<ul>
+							<li><label for="Form_Comment">Add a comment:</label> <input type="text" id="Form_Comment" name="Form_Comment" value="" class="inputbox"></li>
+					        <br/>
+					        <li><input type="submit" id="comment_submit" name="comment_submit" value="Comment" class="button"></li>	
+				        </ul>
+			        </form>
 					</ul>
 					<div class="clearfooter"></div>
 				</div>
