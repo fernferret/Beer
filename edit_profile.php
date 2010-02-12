@@ -51,15 +51,15 @@
 							$user = new User();
 							$user->modify_beer_lover($name, $email, $address, $username, $password, $new_region, $new_picture) ;
 						} else {
-							alert("Enter a password please!", FALSE);
+							alert("Enter your password below, then make changes.", FALSE);
 						}
 						?>
                         <div>
                             <ul>
+                            <li><label for="Form_Password">Password</label> <input type="text" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
                             	<li><label for="Form_Name">Name</label> <input type="text" id="Form_Name" name="Form_Name" value="<?php echo $name; ?>" class="inputbox"></li>
                                 <li><label for="Form_Address">Address</label> <input type="text" id="Form_Address" name="Form_Address" value="<?php echo $address; ?>" class="inputbox"></li>
                                 <li><label for="Form_Email">Email Address</label> <input type="text" id="Form_Email" name="Form_Email" value="<?php echo $email; ?>" class="inputbox"></li>
-								<li><label for="Form_Password">New Password</label> <input type="text" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
 								<li><label for="Form_Picture">Picture</label> <input type="text" id="Form_Picture" name="Form_Picture" value="<?php echo $picture; ?>" class="inputbox"></li>
 								<span>The picture should be 170px by 200px.</span>
 								<li><label for="Date_Joined">Date Joined</label> <div style="font-size: 18px"><?php echo $date_joined; ?></div></li>

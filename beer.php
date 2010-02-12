@@ -2,7 +2,7 @@
     include "includes/config.php";
     include "includes/db.php";
     include $_TEMPLATE."header.php";
-    require_once $_UTIL."user.php";
+    require_once $_UTIL."beer.php";
     require_once $_UTIL."functions.php";
     
     $beer_id = $_GET['id'];
@@ -14,7 +14,6 @@
 	    echo '<meta http-equiv="refresh" content="0;error.php">';
     }
   
-
 	$beer = $row['name'];
 	$aroma = $row['aroma'];
 	$filtered = $row['filtered'];
@@ -22,7 +21,6 @@
  
  	$ra = mssql_query("SELECT AVG(value) as avgrate FROM rates WHERE beer_id = '".$beer_id."'");
 	$ro = mssql_fetch_assoc($ra);
-	
 	
 	$rating = $ro["avgrate"];
 	if($rating == '') $rating = 0;
@@ -34,6 +32,7 @@
 		$property_name[$i] = $prow["property_name"];	
 	}
 ?>
+
 <div class="container">
     <div class="column span-24">
        	<div class="beers column span-17 append-1">
@@ -53,7 +52,7 @@
 					</ul>
 					</div>					
 					<h2><a href="beer.php?id=<?php echo $beer_id ?>"><?php echo $beer; ?></a></h2>
-					<span class="modified">Last modified by: <a href="view_profile.php?u=<?php echo $last_username; ?>"><?php echo $last_username; ?></a></span>					
+					<span class="modified">Last modified by: <a href="profile.php?u=<?php echo $last_username; ?>"><?php echo $last_username; ?></a></span>					
 				</div>
 			</div>
 		</div>
@@ -63,7 +62,18 @@
 				<div class="blurb">
 					<div id="rating">
 						<strong><?php echo $rating; ?></strong> / 5
+						<form name="rating_submit" method="post" action="beer.php?id=<?php echo $beer_id; ?>">
+				        	<p><input style="width: 100px; float: left;" type="text" size="10" id="Form_Rating" class="numeric" name="Form_Rating" value="" class="inputbox"><input style="width: 50px;" type="submit" id="rating_submit" name="rating_submit" value="Vote"></p>			        
+			        	</form>
 					</div>
+					<?php
+					if (isset($_POST['rating_submit'])) {
+						$beer = new Beer();
+						$username = $_SESSION["username"];
+						$rating = $_POST["Form_Rating"];
+						$beer->add_rating($username, $rating, $beer_id);
+					}
+					?>
 					<form name="edit_submit" method="post" action="edit_beer.php?id=<?php echo $beer_id; ?>">
 				        <p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
 			        </form>

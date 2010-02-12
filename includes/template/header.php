@@ -11,14 +11,14 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="includes/css/grid.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="includes/css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="includes/css/style.css">
-
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="includes/js/jquery.jstepper.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function($) {  
-		
+		$(document).ready(function() {  
+			$("input.numeric").jStepper({minValue:0, maxValue:5});
 		});
 	</script>
-
 </head>
 <body>
 <div class="wrapper">
@@ -32,7 +32,7 @@
 				?>
 		    		<li class="submit"><a href="submit.php">Submit</a></li>
 		    		<li class="search"><a href="search.php">Search</a></li>
-					<li class="edit_profile"><a href="edit_profile.php">Edit Profile</a></li>
+					<li class="edit_profile" style="color: #fff"><a href="profile.php?u=<?php echo $_SESSION['username']; ?>">View</a>/<a href="edit_profile.php">Edit</a> Profile</li>
 	    			<li class="logout"><a href="logout.php">Logout (<strong><?php echo $_SESSION['username']; ?></strong>)</a></li>
 	 	 		<?php
 	 	 		} else {

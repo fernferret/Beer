@@ -74,4 +74,27 @@ class Beer
 			alert("Beer already exists!", FALSE);
 		
 	}
+	
+	function add_rating($username, $rating, $beer_id) {
+		global $db;
+
+		$proc_prop = "usp_add_rating";
+		$stmt_prop = mssql_init($proc_prop, $db);
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt_prop, "@username", $username, SQLVARCHAR);
+		mssql_bind($stmt_prop, "@ratingvalue", $rating, SQLINT2);
+		mssql_bind($stmt_prop, "@beer_id", $beer_id, SQLINT2);    
+
+		mssql_bind($stmt_prop, "RETVAL", $return, SQLINT2);
+
+		/* now execute the procedure */
+		$result_prop = mssql_execute($stmt_prop);
+		
+		if($return==4)
+			alert("Already rated this beer!", FALSE);
+		else if($return==3)
+			alert("Please enter a rating.", FALSE);
+		
+	}
 }

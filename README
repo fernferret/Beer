@@ -2,17 +2,19 @@ sproc todo list:
 	
 	THESE ARE FOR THE FRONTEND
 	--------------------------
-	add_beer
+	######add_beer
 	######add_beer_lover 
 	######auth_beer_lover
-	find_beer
+	######find_beer
 	modify_beer
 	######modify_beer_lover
 	modify_vendor
+    ######edit_profile
+    
 	
 	THESE ARE FOR THE ADMIN.PHP
 	---------------------------
-	add_beer_to_vendor
+	######add_beer_to_vendor
 	add_property
 	add_rating
 	add_vendor

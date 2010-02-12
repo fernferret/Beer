@@ -7,14 +7,13 @@
 	modify_property
 	modify_region
 	remove_beer
-	remove_beer_from_vendor
+	Xremove_beer_from_vendor
 	remove_beer_lover
 	remove_property
 	remove_rating
 	remove_region
 	remove_vendor
 */
-	include "";
 	include "includes/config.php";
 	include "includes/db.php";
 	include "util/adminhelp.php";
@@ -133,8 +132,7 @@
 									echo "<option value=\"$id\">$value</option>";
 								}
 							}
-							echo "<input type=\"button\" value=\"Select Vendor\" class=\"button\" />";
-	                        echo '</select> ';
+							echo '</select> ';
 							if(isset($_POST['rbfv_vendor']))
 							{
 								if (isset($_POST['rbfv_beer'])) {	
@@ -153,7 +151,8 @@
 								$result = mssql_fetch_assoc($query);
 								$id = $result["beer_id"];
 								$value = $result['beer'];
-								echo "<option selected=\"selected\" value=\"$id\">$value</option>";
+								echo "<option selected=\"selected\" value=\"\">Select a Beer</option>";
+								echo "<option value=\"$id\">$value</option>";
 								while ($result = mssql_fetch_assoc($query))
 								{
 									$id = $result["beer_id"];
@@ -169,6 +168,93 @@
 	                        </fieldset>
 	                    </form>
 	                </div>
+                    
+                    
+                    	                <div class="admin_function">
+	                	<label>Add a new Vendor!</label>
+	 					<form id="admin" name="add_beer_to_vendor" method="post" action="admin.php">
+                        <fieldset>
+
+                            
+                            <?php 
+							if (isset($_POST['av_vname'])) {	
+								$regionid = $_POST['av_regionid'];
+								$name = $_POST['av_vname'];
+								$type = $_POST['av_vtype'];
+								$address = $_POST['av_vaddress'];
+								
+								$admHelp = new Adminhelp();
+								$admHelp->add_vendor($regionid, $type, $name, $address);
+							}?>
+                            <label for="av_vaddress">Name</label>
+                            <input type="text" id="av_vname" name="av_vname" value="" />
+                             <label for="av_vtype">Type of Vendor</label>
+                            <?php 
+							echo '<select id="av_vtype" name="av_vtype">';
+							$query = mssql_query("SELECT * FROM view_all_vendor_types");
+							$array = mssql_fetch_assoc($query);
+                            if(isset($_POST['av_vtype']) && ($array['type'] == $_POST['av_vtype'])){
+								$type = $array["type"];
+								echo "<option selected=\"selected\" value=\"$type\">$type</option>";
+							}
+							else
+							{
+								$type = $array["type"];
+								echo "<option value=\"$type\">$type</option>";
+							}
+							while ($array = mssql_fetch_assoc($query))
+							{
+								$type = $array["type"];
+								if(isset($_POST['av_vtype']) && ($type == $_POST['av_vtype'])){
+                               		echo "<option selected=\"selected\" value=\"$type\">$type</option>";
+								}
+								else
+								{
+									echo "<option value=\"$type\">$type</option>";
+								}
+							}
+	                        echo '</select> ';
+	                       ?>
+                           <label for="av_vaddress">Address</label>
+                            <input type="text" id="av_vaddress" name="av_vaddress" />
+                            <label for="av_vaddress">Name</label>
+                            <input type="text" id="av_vname" name="av_vname" />
+	                        <?php 
+							echo '<select id="beer" name="beer">';
+							$beer_query = mssql_query("SELECT * FROM view_all_beer_names");
+							$beers_arr = mssql_fetch_assoc($beer_query);
+                            if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){
+								$id = $beers_arr["id"];
+								$beer = $beers_arr['beer'];
+								echo "<option selected=\"selected\" value=\"$id\">$beer</option>";
+							}
+							else
+							{
+								$id = $beers_arr["id"];
+								$beer = $beers_arr['beer'];
+								echo "<option value=\"$id\">$beer</option>";
+							}
+							while ($beers_arr = mssql_fetch_assoc($beer_query))
+							{
+								$id = $beers_arr["id"];
+								$beer = $beers_arr['beer'];
+								if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){
+                               		echo "<option selected=\"selected\" value=\"$id\">$beer</option>";
+								}
+								else
+								{
+									echo "<option value=\"$id\">$beer</option>";
+								}
+							}
+	                        echo '</select> ';
+	                       ?>
+                                <br /><br />
+                                <input type="submit" value="Add Vendor" class="button" />
+	                        </fieldset>
+	                    </form>
+	                </div>
+                    
+                    
 				</div>
 			</div>
 		</div>
