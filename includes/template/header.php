@@ -26,7 +26,7 @@
 		<div class="container">
 			<h1><a href="http://spaceheater.dhcp.rose-hulman.edu/Beer/">Beer</a></h1>
 			<ul>
-				<li class="browse"><a href="browse.php">Browse</a></li>
+				<li class="browse"><a href="index.php">Browse</a></li>
 	    		<?php 
 				if (!empty($_SESSION['logged_in']) || !empty($_SESSION['username'])) {
 				?>

@@ -120,4 +120,18 @@ class User
 			return 0; 
 		}
 	}	
+	
+	public function search($search) {
+		$column = "name";
+		$query = "select * from beers where $column like \"%$search%\" order by $column";
+		$result = mssql_query($query);
+		echo "<h1>Results:</h1>\n";
+		if($result) {
+			$r = mssql_fetch_array($result);		
+			echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beer.php?id='.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
+		} else {
+			alert("Not in database! Try again.", FALSE);
+		}
+	
+	}
 }

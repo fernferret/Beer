@@ -10,7 +10,7 @@
     $res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
 	$row = mssql_fetch_assoc($res);
 	
-    if(!$beer_id || mssql_num_rows($res) != 0) {
+    if(!$beer_id || mssql_num_rows($res) == 0) {
 	    echo '<meta http-equiv="refresh" content="0;error.php">';
     }
   
@@ -23,11 +23,10 @@
  	$ra = mssql_query("SELECT AVG(value) as avgrate FROM rates WHERE beer_id = '".$beer_id."'");
 	$ro = mssql_fetch_assoc($ra);
 	
-	if(mssql_num_rows($ra) == 0)
-		$rating = 0;
-	else
-		$rating = $ro["avgrate"];
-
+	
+	$rating = $ro["avgrate"];
+	if($rating == '') $rating = 0;
+	
 	$pres = mssql_query("SELECT * FROM has_property WHERE beer_id = '".$beer_id."'");
 	for($i=0;$i<mssql_num_rows($pres);$i++) {
 		$prow = mssql_fetch_assoc($pres);
@@ -58,6 +57,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="beers column span-6 last">
 			<div class="shadow">
 				<div class="blurb">
@@ -67,6 +67,15 @@
 					<form name="edit_submit" method="post" action="edit_beer.php?id=<?php echo $beer_id; ?>">
 				        <p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
 			        </form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="beers column span-17 append-1">
+			<div class="shadow">
+				<div class="page">
+					<h2>Comments</h2>
+					<div class="clearfooter"></div>
 				</div>
 			</div>
 		</div>
