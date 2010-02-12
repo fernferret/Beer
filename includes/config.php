@@ -5,4 +5,5 @@ $_TEMPLATE 	= $_INCLUDES . "template/";
 $_JS 		= $_INCLUDES . "js/";
 $_CSS 		= $_INCLUDES . "css/";
 $_IMAGES 	= $_INCLUDES . "images/";
-$_UTIL 		= "util/";
+$_UTIL 		= "util/"; 
+?>

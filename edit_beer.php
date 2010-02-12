@@ -9,13 +9,11 @@
 	}
 	
 	$beer_id = $_GET['id'];
-	
-	    
-    if(!$beer_id) {
+	$res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
+    if(!$beer_id || mssql_num_rows($res) == 0) {
 	    echo '<meta http-equiv="refresh" content="0;error.php">';
     }
-    
-	
+   	
     $res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
 	$row = mssql_fetch_assoc($res);
 	

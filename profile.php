@@ -7,13 +7,13 @@
     
     $username = $_GET['u'];
     
-    if(!$username) {
-	    echo '<meta http-equiv="refresh" content="0;error.php">';
-    }
-    
     $res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$username."'");
 	$row = mssql_fetch_assoc($res);
 	
+    if(!$username || mssql_num_rows($res) == 0) {
+	    echo '<meta http-equiv="refresh" content="0;error.php">';
+    }
+    
 	$name = $row["name"];
 	$address = $row["address"];
 	$email = $row["email"];

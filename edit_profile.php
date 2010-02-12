@@ -13,6 +13,10 @@
     $res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$username."'");
 	$row = mssql_fetch_assoc($res);
 	
+    if(mssql_num_rows($res) == 0) {
+	    echo '<meta http-equiv="refresh" content="0;error.php">';
+    }
+    
 	$name = $row["name"];
 	$address = $row["address"];
 	$email = $row["email"];
@@ -28,7 +32,7 @@
 		<div class="shadow">
             <div class="page">
                 <div id="edit_profile">
-                    <img src="<?php echo $picture; ?>" alt="<?php echo $username; ?>" style="float:right;"/>
+                    <img src="<?php echo $picture; ?>" alt="<?php echo $username; ?>" style="float:right;width:170px;height:200px;"/>
                     <h2>Edit your profile, <strong><?php echo $username; ?></strong></h2>
                     <form style="float: left;" name="edit_profile" method="post" action="edit_profile.php">
 	                    <?php 
