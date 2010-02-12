@@ -23,7 +23,7 @@
 		<div class="column span-24">			
 			<div class="shadow">
 				<div class="page" id="browse">                
-	                <div class="admin_test"></div>
+	                <div class="admin_function">
 	                	<label>Add a beer to a vendor!</label>
 	 					<form id="admin" name="add_beer_to_vendor" method="post" action="admin.php">
 	                     	<?php 
@@ -41,13 +41,24 @@
 									$beer_query = mssql_query("SELECT * FROM view_all_beer_names");
 									$beers_arr = mssql_fetch_assoc($beer_query);
 									?>
+                                    <?php if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){ ?>
 									<option selected="selected" value="<?php echo $beers_arr['id'] ?>"><?php echo $beers_arr['beer'] ?></option>
 									<?php
-	                				
-									while ($beers_arr = mssql_fetch_assoc($beer_query))
+									}
+									else
 									{?>
 									<option value="<?php echo $beers_arr['id'] ?>"><?php echo $beers_arr['beer'] ?></option>
-									<?php }?>
+									<?php }
+									while ($beers_arr = mssql_fetch_assoc($beer_query))
+									{
+										if(isset($_POST['beer']) && ($beers_arr['id'] == $_POST['beer'])){?>
+                                    <option selected="selected" value="<?php echo $beers_arr['id'] ?>"><?php echo $beers_arr['beer'] ?></option>
+                                    <?php 
+										}
+										else
+										{?>
+									<option value="<?php echo $beers_arr['id'] ?>"><?php echo $beers_arr['beer'] ?></option>
+									<?php }}?>
 	                           	</select>
 	                            <span class="label">to</span>
 	                            <select id="vendor" name="vendor">
@@ -64,10 +75,10 @@
 									<?php }?>
 	                           	</select>
                                 <br /><br />
-                                <input type="submit" value="Add Beer to Vendor" class="button" />
+                                <input type="submit" value="Add Beer to Vend" class="button" />
 	                        </fieldset>
 	                    </form>
-	                <div class="admin_test"></div>
+	                </div>
 				</div>
 			</div>
 		</div>

@@ -32,8 +32,8 @@ input.inputbox,select{font-size:18px;width:220px;border:1px solid #a4cfe6;paddin
 input.inputbox:focus{color:#000 !important;background:#fffede !important}
 input.button{font-weight:700;color:#fff;text-shadow:0 -1px 0 #000;font-size:20px;text-align:center;display:block;border:0;height:46px;width:200px;cursor:pointer;background:url('../images/button.png') left bottom no-repeat}
 input.button:hover{background:url('../images/button.png') right bottom no-repeat}
-div.errors{background:#c00;margin-bottom:5px;color:#fff;font-size:18px;text-shadow:0 1px 1px #000;-moz-border-radius:3px;-webkit-border-radius:3px;padding:8px 12px}
-div.errors.success{background:green}
+div.errors{background:#c00;margin-bottom:5px;color:#fff;font-size:18px;text-shadow:0 1px 1px #000;-moz-border-radius:3px;-webkit-border-radius:3px;padding:8px 12px; font-weight: 700;}
+div.errors.success{background:green; font-weight: 700;}
 div.errors strong {color: #000;}
 div.errors a:hover{color: #fff}
 .required, #register strong, #login strong, .blurb a,#edit_profile h2 strong, #edit_beer h2 strong{color:red;font-weight:700}
@@ -56,5 +56,5 @@ ul.user_attributes li:hover{background-color:#444;}
 #admin .label { font-size:20px;color:#666;font-family:"Helvetica Neue", "Helvetica", "Lucida Grande",'Lucida Sans Unicode',Verdana,Arial,"Bitstream Vera Sans",sans-serif;text-shadow:0 1px 0 #fff;}
 #edit_profile img{margin-bottom:10px}
 #profile img{margin-right:10px;margin-bottom:10px;background-color:#000;-webkit-border-radius:5px;-moz-border-radius:5px}
-.admin_function{padding: 10px; border-bottom: 5px #eee solid; background-color: #f1f1f1}
+.admin_function{padding: 10px; border-bottom: 5px #eee solid; background-color: #f9f9f9	}
 #rating { margin-bottom: 10px; -webkit-border-radius:5px;-moz-border-radius:5px; text-shadow: rgb(198, 203, 213) 0px 1px 0px;background-color: #BCC1CB; color: rgb(26, 31, 39); font-size: 60px; text-align:center; text-shadow: 0px 1px 0px #fff; font-weight: 700; padding: 10px;}

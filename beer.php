@@ -6,22 +6,27 @@
     require_once $_UTIL."functions.php";
     
     $beer_id = $_GET['id'];
-    
-    if(!$beer_id) {
-	    echo '<meta http-equiv="refresh" content="0;error.php">';
-    }
-    
+      
     $res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
 	$row = mssql_fetch_assoc($res);
+	
+    if(!$beer_id || mssql_num_rows($res) != 0) {
+	    echo '<meta http-equiv="refresh" content="0;error.php">';
+    }
+  
 
 	$beer = $row['name'];
 	$aroma = $row['aroma'];
 	$filtered = $row['filtered'];
 	$last_username = $row['last_username'];
  
- 	$res = mssql_query("SELECT AVG(value) FROM rates WHERE beer_id = '".$beer_id."'");
-	$row = mssql_fetch_assoc($res);
-	$rating = $row["column1"];
+ 	$ra = mssql_query("SELECT AVG(value) as avgrate FROM rates WHERE beer_id = '".$beer_id."'");
+	$ro = mssql_fetch_assoc($ra);
+	
+	if(mssql_num_rows($ra) == 0)
+		$rating = 0;
+	else
+		$rating = $ro["avgrate"];
 
 	$pres = mssql_query("SELECT * FROM has_property WHERE beer_id = '".$beer_id."'");
 	for($i=0;$i<mssql_num_rows($pres);$i++) {
@@ -57,7 +62,7 @@
 			<div class="shadow">
 				<div class="blurb">
 					<div id="rating">
-						<?php echo $rating; ?> / 5
+						<strong><?php echo $rating; ?></strong> / 5
 					</div>
 					<form name="edit_submit" method="post" action="edit_beer.php?id=<?php echo $beer_id; ?>">
 				        <p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
