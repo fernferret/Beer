@@ -27,10 +27,10 @@
 			<h1><a href="http://spaceheater.dhcp.rose-hulman.edu/Beer/">Beer</a></h1>
 			<ul>
 				<li class="browse"><a href="browse.php">Browse</a></li>
-	    		<li class="submit"><a href="submit.php">Submit</a></li>
 	    		<?php 
 				if (!empty($_SESSION['logged_in']) || !empty($_SESSION['username'])) {
 				?>
+		    		<li class="submit"><a href="submit.php">Submit</a></li>
 					<li class="edit_profile"><a href="edit_profile.php">Edit Profile</a></li>
 	    			<li class="logout"><a href="logout.php">Logout (<strong><?php echo $_SESSION['username']; ?></strong>)</a></li>
 	 	 		<?php

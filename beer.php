@@ -7,6 +7,10 @@
     
     $beer_id = $_GET['id'];
     
+    if(!$beer_id) {
+	    echo '<meta http-equiv="refresh" content="0;error.php">';
+    }
+    
     $res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
 	$row = mssql_fetch_assoc($res);
 
@@ -17,7 +21,7 @@
 ?>
 <div class="container">
     <div class="column span-24">
-       	<div class="beers beer-detail column span-15 append-1">
+       	<div class="beers column span-15 append-1">
 			<div class="shadow">
 				<div class="beer">
 					<div>

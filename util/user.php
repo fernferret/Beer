@@ -39,7 +39,7 @@ class User
 		mssql_bind($stmt, "@password", $password, SQLVARCHAR);    
 		mssql_bind($stmt, "@region_id", $region_id, SQLINT2);    	
 		mssql_bind($stmt, "@date_joined", $date_joined, SQLVARCHAR);    	
-		
+
 		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
 	
 		/* now execute the procedure */

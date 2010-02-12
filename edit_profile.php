@@ -25,61 +25,59 @@
 ?>
 <div class="container">
     <div class="column span-24">
-    	<div class="page-container column span-16">
-			<div class="shadow">
-	            <div class="page">
-	                <div id="edit_profile">
-	                    <h2>Edit your profile, <strong><?php echo $username; ?></strong></h2>
-	                    <form name="edit_profile" method="post" action="edit_profile.php">
-		                    <?php 
-							if (isset($_POST['Form_Edit'])) {	
-								$name = $_POST['Form_Name'];
-								$email = $_POST['Form_Email'];
-								$address = $_POST['Form_Address'];
-								$region = $_POST['Form_NewRegion'];
-								$picture = $_POST['Form_Picture'];
-								$password = $_POST['Form_Password'];
-								
-								$rq = mssql_query("SELECT * FROM regions WHERE city = '".$region."'");
-								$ra = mssql_fetch_assoc($rq);
-								$r = $region_arr["region_id"];
-								
-								$user = new User();
-								$user->modify_beer_lover($name, $email, $address, $username, $password, $r, $picture) ;
-							} 
-							?>
-	                        <div>
-	                            <ul>
-	                            	<li><label for="Form_Name">Name</label> <input type="text" id="Form_Name" name="Form_Name" value="<?php echo $name; ?>" class="inputbox"></li>
-                                    <li><label for="Form_Address">Address</label> <input type="text" id="Form_Address" name="Form_Address" value="<?php echo $address; ?>" class="inputbox"></li>
-                                    <li><label for="Form_Email">Email Address</label> <input type="text" id="Form_Email" name="Form_Email" value="<?php echo $email; ?>" class="inputbox"></li>
-									<li><label for="Form_Password">Password</label> <input type="text" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
-									<li><label for="Form_Picture">Picture</label> <input type="text" id="Form_Picture" name="Form_Picture" value="<?php echo $picture; ?>" class="inputbox"></li>
-									<span>The picture should be 170px by 200px.</span>
-									<li><label for="Date_Joined">Date Joined</label> <div style="font-size: 18px"><?php echo $date_joined; ?></div></li>
-									<li><label for="Form_Region">Region</label> <div style="font-size: 18px"><?php echo $region; ?></div></li>
-                                    <li><label for="Form_NewRegion">New Region</label>
-                                    <?php
-	                                    echo'<select name="Form_NewRegion">';
-										$res = mssql_query("SELECT * from regions");
-										for($i=0;$i<mssql_num_rows($res);$i++) {
-											$row = mssql_fetch_assoc($res);
-											echo "<option>".$row["city"]."</option>";
-										}
-										echo'</select>';
-									?>
-                                    </li>
-                                    <br />
-                             		<li><input type="submit" id="Form_Edit" name="Form_Edit" value="Edit Profile" class="button"></li>
-	                            </ul>
-	                        </div>
-	                    </form>                 
-	                </div>
-	            </div>
-	        </div>
-	        
-	    </div>
-
+		<div class="shadow">
+            <div class="page">
+                <div id="edit_profile">
+                    <img src="<?php echo $picture; ?>" alt="<?php echo $username; ?>" style="float:right;"/>
+                    <h2>Edit your profile, <strong><?php echo $username; ?></strong></h2>
+                    <form style="float: left;" name="edit_profile" method="post" action="edit_profile.php">
+	                    <?php 
+						if (isset($_POST['Form_Edit'])) {	
+							$name = $_POST['Form_Name'];
+							$email = $_POST['Form_Email'];
+							$address = $_POST['Form_Address'];
+							$region = $_POST['Form_NewRegion'];
+							$new_picture = $_POST['Form_Picture'];
+							$password = $_POST['Form_Password'];
+							
+							$rq = mssql_query("SELECT * FROM regions WHERE city = '".$region."'");
+							$ra = mssql_fetch_assoc($rq);
+							$new_region = $region_arr["region_id"];
+							
+							$user = new User();
+							$user->modify_beer_lover($name, $email, $address, $username, $password, $new_region, $new_picture) ;
+						} 
+						?>
+                        <div>
+                            <ul>
+                            	<li><label for="Form_Name">Name</label> <input type="text" id="Form_Name" name="Form_Name" value="<?php echo $name; ?>" class="inputbox"></li>
+                                <li><label for="Form_Address">Address</label> <input type="text" id="Form_Address" name="Form_Address" value="<?php echo $address; ?>" class="inputbox"></li>
+                                <li><label for="Form_Email">Email Address</label> <input type="text" id="Form_Email" name="Form_Email" value="<?php echo $email; ?>" class="inputbox"></li>
+								<li><label for="Form_Password">New Password</label> <input type="text" id="Form_Password" name="Form_Password" value="" class="inputbox"></li>
+								<li><label for="Form_Picture">Picture</label> <input type="text" id="Form_Picture" name="Form_Picture" value="<?php echo $picture; ?>" class="inputbox"></li>
+								<span>The picture should be 170px by 200px.</span>
+								<li><label for="Date_Joined">Date Joined</label> <div style="font-size: 18px"><?php echo $date_joined; ?></div></li>
+								<li><label for="Form_Region">Region</label> <div style="font-size: 18px"><?php echo $region; ?></div></li>
+                                <li><label for="Form_NewRegion">New Region</label>
+                                <?php
+                                    echo'<select name="Form_NewRegion">';
+									$res = mssql_query("SELECT * from regions");
+									for($i=0;$i<mssql_num_rows($res);$i++) {
+										$row = mssql_fetch_assoc($res);
+										echo "<option>".$row["city"]."</option>";
+									}
+									echo'</select>';
+								?>
+                                </li>
+                                <p><br/></p>
+                         		<li><input type="submit" id="Form_Edit" name="Form_Edit" value="Edit Profile" class="button"></li>
+                            </ul>
+                        </div>
+                    </form>  
+    				<div class="clearfooter"></div>               
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <?php
