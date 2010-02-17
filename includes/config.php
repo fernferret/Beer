@@ -6,4 +6,4 @@ $_JS 		= $_INCLUDES . "js/";
 $_CSS 		= $_INCLUDES . "css/";
 $_IMAGES 	= $_INCLUDES . "images/";
 $_UTIL 		= "util/"; 
-?>
+$_HOME		= "http://spaceheater.dhcp.rose-hulman.edu/Beer/";

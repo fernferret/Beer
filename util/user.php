@@ -58,18 +58,22 @@ class User
 			alert("That email address is already taken!", FALSE);
 	}
 	
-	function modify_beer_lover($name, $email, $address, $username, $password, $region_id, $picture) {
+	function modify_beer_lover($name, $email, $address, $username, $region_id, $picture) {
 		/* prepare the statement */
 		global $db;
 		$proc = "usp_modify_beer_lover";
 		$stmt = mssql_init($proc, $db);
 		
+		if(!isValidEmail($email)) {
+			alert("You must enter a valid email address!", FALSE);
+			return 0;
+		}	
+		
 		/* now bind the parameters to it */
 		mssql_bind($stmt, "@newname", $name, SQLVARCHAR);
 		mssql_bind($stmt, "@newemail", $email, SQLVARCHAR);
 		mssql_bind($stmt, "@newaddress", $address, SQLVARCHAR);    
-		mssql_bind($stmt, "@username", $username, SQLVARCHAR);    
-		mssql_bind($stmt, "@newpassword", $password, SQLVARCHAR);    
+		mssql_bind($stmt, "@username", $username, SQLVARCHAR);      
 		mssql_bind($stmt, "@newregion_id", $region_id, SQLINT2);    	
 		mssql_bind($stmt, "@newpicture", $picture, SQLVARCHAR);    	
 		
@@ -105,7 +109,7 @@ class User
 			$_SESSION['logged_in'] = 1;
 			
 			alert("Successfully logged in as " . $_SESSION['username'], TRUE);
-			echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
+			redirect("/"); //refresh the page to see if membership worked.
 		} else if($return == 1 || $return == 2) {
 			alert("You need to enter a valid username/password!", FALSE);
 		}
@@ -120,18 +124,47 @@ class User
 			return 0; 
 		}
 	}	
-	
+
 	public function search($search) {
 		$column = "name";
 		$query = "select * from beers where $column like \"%$search%\" order by $column";
 		$result = mssql_query($query);
 		echo "<h1>Results:</h1>\n";
 		if($result) {
-			$r = mssql_fetch_array($result);		
-			echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beer.php?id='.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
+			$r[0] = mssql_fetch_assoc($result);
+			$i = 1;
+			while($r[$i] = mssql_fetch_assoc($result))
+			{
+				$i++;
+			}
+			return $r;
 		} else {
-			alert("Not in database! Try again.", FALSE);
+			alert("No results found! Try again.", FALSE);
 		}
+	}
 	
+	public function region_name($region_id) {
+		$res = mssql_query("SELECT city FROM regions WHERE region_id = '".$region_id."'");
+		$row = mssql_fetch_assoc($res);
+		return $row["city"];		
+	}
+	
+	public function region_id($city) {
+		$res = mssql_query("SELECT region_id FROM regions WHERE city = '".$city."'");
+		$row = mssql_fetch_assoc($res);
+		return $row["region_id"];		
+	}
+	
+	public function beer_name($beer_id) {
+		$res = mssql_query("SELECT name FROM beers WHERE beer_id = '".$beer_id."'");
+		$row = mssql_fetch_assoc($res);
+		return $row["name"];				
+	}
+
+	
+	public function get_recommended_user($username) {
+		$res = mssql_query("SELECT * FROM dbo.unf_auto_recommend($id)");
+		$row = mssql_fetch_assoc($res);
+		return $row;
 	}
 }

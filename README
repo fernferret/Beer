@@ -1,37 +1,41 @@
-sproc todo list:
+todo files:
+
+	SUBMIT
 	
-	THESE ARE FOR THE FRONTEND
-	--------------------------
-	######add_beer
-	######add_beer_lover 
-	######auth_beer_lover
-	######find_beer
-	modify_beer
-	######modify_beer_lover
-	modify_vendor
-    ######edit_profile
-    
+	BEER
 	
-	THESE ARE FOR THE ADMIN.PHP
-	---------------------------
-	######add_beer_to_vendor
-	add_property
-	add_rating
-	add_vendor
-	modify_property
-	modify_region
-	remove_beer
-	remove_beer_from_vendor
-	remove_beer_lover
-	remove_property
-	remove_rating
-	remove_region
-	remove_vendor
+	EDIT_BEER
+	
+	RECOMMENDATIONS/AUTO RECOMMENDATIONS
+	
+	BROWSE
+	
+	FAVORITES
 
 todo list:
 
-	add foreign key to last_username
-	constraints work
-	validation work
-	admin page
-	vendors.php
+	recommendations
+		add button to each beer to 'recommend to'
+		query a list of beer_lovers to recommend
+		somehow notify the user he has a recommended beer
+			maybe an 'inbox'?
+			
+	cleanup php functions
+	
+	cleanup css containers
+	
+	replace SELECT queries in php with views
+	
+	fix the - inside of 5
+	
+	add a search user by region
+	
+	add upload picture
+		located just in edit_profile
+
+	refresh on modify_beer_lover
+	
+	fix search stored procedure
+		needs to return string
+		
+	

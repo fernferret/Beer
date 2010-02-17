@@ -9,16 +9,21 @@
 			<div class="shadow">
 				<div class="page" id="search">
 					<h2>Search for a <strong>beer!</strong></h2>
-					<form name="search" method="post" action="search.php">
+					<form name="search" method="post" action="search">
 					<?php 
 						if (isset($_POST['Form_Submit'])) {	
 							$search = $_POST["Form_Search"];
 							$user = new User();
-							$user->search($search);
+							$results = $user->search($search);
+							foreach($results as $r) {
+								if($r['name'] != "") {
+									echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beer.php?id='.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
+								}
+							}
 						} 
 						?>
 						<ul>
-							<li><label for="Form_Search">Search</label> <input type="text" id="Form_Search" name="Form_Search" value="" class="inputbox"></li>
+							<li><label for="Form_Search">Search</label> <input type="text" id="Form_Search" name="Form_Search" value="" class="inputbox allowletters"></li>
   	                        <br />
 	                 		<li><input type="submit" id="Form_Submit" name="Form_Submit" value="Search" class="button"></li>
                  		</ul>
@@ -26,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="clearfooter"></div>
+		<div class="clear"></div>
 	</div>
 
 <?php

@@ -16,7 +16,7 @@
 */
 	include "includes/config.php";
 	include "includes/db.php";
-	include "util/adminhelp.php";
+	include "util/admin.php";
 	include $_TEMPLATE."header.php";
 ?>
 	<div class="container">

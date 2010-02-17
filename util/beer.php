@@ -16,6 +16,9 @@ class Beer
 {
 	function add_beer($name, $aroma, $filtered, $weight, $hoppiness, $finish, $color,
 														$clarity, $type, $head, $alcohol, $username) {
+																												
+		$beer = new Beer();
+
 		global $db;
 		$proc = "usp_add_beer";
 		$stmt = mssql_init($proc, $db);
@@ -24,7 +27,7 @@ class Beer
 		mssql_bind($stmt, "@newname", $name, SQLVARCHAR);
 		mssql_bind($stmt, "@newaroma", $aroma, SQLVARCHAR);
 		mssql_bind($stmt, "@newfiltered", $filtered, SQLVARCHAR);    
-		mssql_bind($stmt, "@last_username", $username, SQLVARCHAR);    
+		mssql_bind($stmt, "@submitted_by", $username, SQLVARCHAR);    
 
 		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
 		
@@ -35,8 +38,6 @@ class Beer
 		$row = mssql_fetch_assoc($res);
 		$beer_id = $row["beer_id"];
 
-		$beer = new Beer();
-
 		$beer->add_property_to_beer($beer_id, "Weight", $weight);
 		$beer->add_property_to_beer($beer_id, "Hoppiness", $hoppiness);
 		$beer->add_property_to_beer($beer_id, "Finish", $finish);
@@ -46,8 +47,9 @@ class Beer
 		$beer->add_property_to_beer($beer_id, "Head", $head);
 		$beer->add_property_to_beer($beer_id, "AlcoholContent", $alcohol);
 		
-		if($return==0)
-			alert("Succes! <strong>".$name."</strong> added. <a href='beer.php?id=".$beer_id."'>Click here</a> to view your submission.", TRUE);
+		if($return==0) {
+			alert("Success! <strong>".$name."</strong> added. <a href='beers/".$beer_id."'>Click here</a> to view your submission.", TRUE);
+		}
 	}
 	
 	function add_property_to_beer($beer_id, $property_name, $description) {
@@ -70,8 +72,9 @@ class Beer
 		$row = mssql_fetch_assoc($res);
 		$name = $row["name"];
 		
-		if($return==5)
+		if($return==5) {
 			alert("Beer already exists!", FALSE);
+		}
 		
 	}
 	
@@ -91,13 +94,13 @@ class Beer
 		/* now execute the procedure */
 		$result_prop = mssql_execute($stmt_prop);
 		
-		if($return==4)
+		if($return==4) {
 			alert("Already rated this beer!", FALSE);
-		else if($return==3)
+		} else if($return==3) {
 			alert("Please enter a rating.", FALSE);
-		else if($return==0)
-			echo '<meta http-equiv="refresh" content="0;beer.php?id='.$beer_id.'">';
-		
+		} else if($return==0) {
+			redirect('beer/'.$beer_id);
+		}
 	}
 	
 	function add_comment($username, $beer_id, $description) {
@@ -116,8 +119,30 @@ class Beer
 		/* now execute the procedure */
 		$result_prop = mssql_execute($stmt_prop);
 		
-		if($return==0)
-			echo '<meta http-equiv="refresh" content="0;beer.php?id='.$beer_id.'">';
+		if($return==0) {
+			redirect('beer/'.$beer_id);
+		}
 		
+	}
+	
+	public function get_rating($beer_id) {
+		$res = mssql_query("SELECT AVG(value) as avgrate FROM rates WHERE beer_id = '".$beer_id."'");
+		$row = mssql_fetch_assoc($res);
+		$rating = $row["avgrate"];
+		if($rating == '') $rating = 0;
+		return $rating;				
+	}
+	
+	
+	public function property_name($property_id) {
+		$res = mssql_query("SELECT name FROM property WHERE property_id = '".$property_id."'");
+		$row = mssql_fetch_assoc($res);
+		return $row["name"];				
+	}
+	
+	public function property_desc($property_id) {
+		$res = mssql_query("SELECT description FROM property WHERE property_id = '".$property_id."'");
+		$row = mssql_fetch_assoc($res);
+		return $row["description"];				
 	}
 }

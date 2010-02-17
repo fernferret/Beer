@@ -21,7 +21,7 @@ Modified grid.css file extracted from Blueprint.
    
 .column {
   float: left;
-  margin-right: 10px;
+  margin-right: 0px;
 }
 
 
@@ -55,7 +55,7 @@ Modified grid.css file extracted from Blueprint.
 .span-24  { width: 950px; margin: 0; }
 
 /* Add these to a column to append empty cols. */
-.append-1   { padding-right: 40px; }  
+.append-1   { padding-right: 20px; }  
 .append-2   { padding-right: 80px; } 
 .append-3   { padding-right: 120px; } 
 .append-4   { padding-right: 160px; } 
