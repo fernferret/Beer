@@ -9,6 +9,9 @@ RewriteRule ^error$ error.php
 RewriteRule ^beers/(.*) beer.php?id=$1
 RewriteRule ^profiles/edit$ edit_profile.php
 RewriteRule ^profiles/(.*) profile.php?u=$1
+
+RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
+RewriteRule ^/(.*)$ http://spaceheater.dhcp.rose-hulman.edu/Beer/$1 [R=301,L]
 </IfModule>
 
 <IfModule mod_security.c> 

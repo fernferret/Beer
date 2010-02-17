@@ -167,7 +167,7 @@ display:none;
 padding:0 0 0 10px;
 }
 
-input.inputbox,select {
+input.inputbox,select, textarea{
 font-size:18px;
 width:220px;
 border:1px solid #a4cfe6;
@@ -183,40 +183,23 @@ padding:6px;
 }
 
 input.button {
-font-weight:700;
-color:#fff;
-text-shadow:0 -1px 0 #000;
-font-size:20px;
-text-align:center;
-display:block;
-border:0;
-height:46px;
-width:200px;
-cursor:pointer;
-background:url('../images/button.png') left bottom no-repeat;
+   font-weight: bold;
+   color: #fff;
+   text-shadow: 0 -1px 0 #000;
+   font-size: 20px;
+   text-align: center;
+   display: block;
+   border: 0;
+   height: 46px;
+   width: 200px;
+   background: url('../images/button.png') left bottom no-repeat;
+   cursor: pointer;
 }
 
 input.button:hover {
 background:url('../images/button.png') right bottom no-repeat;
 }
 
-input.buttonsmall {
-font-weight:700;
-color:#fff;
-text-shadow:0 -1px 0 #000;
-font-size:20px;
-text-align:center;
-display:block;
-border:0;
-height:33px;
-width:146px;
-cursor:pointer;
-background:url('../images/buttonsmall.png') left bottom no-repeat;
-}
-
-input.buttonsmall:hover {
-background:url('../images/buttonsmall.png') right bottom no-repeat;
-}
 
 select {
 margin-top:10px;
@@ -292,7 +275,23 @@ margin:10px 5px 5px;
 padding:6px;
 }
 
-ul.beer_attributes li span.property_name {
+span.favorite {
+font-size:16px;
+background-color:#c231ac;
+float:right;
+opacity:.2;
+margin:8px;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+padding:7px;
+cursor: pointer;
+}
+
+span.yes { opacity: 1; }
+span.no { opacity: .2; }
+
+span.remove_favorite:hover { background-color: #90217f; }
+ul.beer_attributes li span.property_name, ul.favorites li span.remove_favorite {
 font-size:16px;
 background-color:#d1a200;
 float:right;
@@ -300,7 +299,14 @@ opacity:.2;
 -webkit-border-radius:5px;
 -moz-border-radius:5px;
 padding:7px;
+cursor: pointer;
 }
+
+.favorite img {width: 16px; height: 16px;}
+ul.favorites li a {color: #fff;}
+ul.favorites li a:hover {color: #ddd;}
+
+ul.favorites li span.remove_favorite:hover { opacity: 1; }
 
 ul.beer_attributes li span.property_desc {
 font-size:12px;
@@ -312,6 +318,10 @@ padding:7px;
 
 ul.beer_attributes li.alt {
 background-color:#303030;
+}
+
+ul.favorites li.alt {
+background-color:#eee;
 }
 
 .beers,.profiles {
@@ -353,12 +363,13 @@ margin-bottom:15px;
 background-color:#f1f1f1;
 border-bottom:#ddd 5px solid;
 padding:10px;
+width: 100%;
 }
 
 .quote {
-background:#DACD00;
+background:#ddd;
 color:fff;
-border-bottom:5px solid #B7A700;
+width: 100%;
 font-weight:700;
 padding:11px;
 }
@@ -453,11 +464,11 @@ color:#fff;
 width:400px;
 }
 
-ul.beer_attributes li:hover,ul.beer_attributes li.alt:hover,ul.top_recommended li:hover,ul.user_attributes li:hover {
+ul.beer_attributes li:hover,ul.beer_attributes li.alt:hover,ul.top_recommended li:hover,ul.user_attributes li:hover, ul.favorites li:hover {
 background-color:#444;
 }
 
-ul.top_recommended li,ul.user_attributes li {
+ul.top_recommended li,ul.user_attributes li, ul.favorites li {
 font-size:24px;
 background-color:#282828;
 text-shadow:0 1px 1px #000;
@@ -470,6 +481,9 @@ margin-bottom:9px;
 font-weight:700;
 padding:5px;
 }
+
+ul.favorites li { background-color: #c231ac; }
+ul.favorites li:hover {background-color: #90217f; }
 
 .beer a,.profile a,.logout strong,.blurb h1 {
 color:#aaa;

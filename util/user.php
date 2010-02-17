@@ -49,7 +49,7 @@ class User
 			$_SESSION['username'] = $username;
 			$_SESSION['logged_in'] = 1;
 			alert("Successfully registered as " . $_SESSION['username'], TRUE);
-			echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
+			redirect("/"); //refresh the page to see if membership worked.
 		} else if($return == 1)
 			alert("You must enter a valid username, password, and email!", FALSE);
 		else if($return == 2)
@@ -141,6 +141,39 @@ class User
 		} else {
 			alert("No results found! Try again.", FALSE);
 		}
+	}
+	
+		
+	function remove_favorite($beer_id, $username) {
+		global $db;
+
+		$proc_prop = "usp_remove_likes_beer";
+		$stmt_prop = mssql_init($proc_prop, $db);
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt_prop, "@beer_id", $beer_id, SQLINT2);    
+		mssql_bind($stmt_prop, "@username", $username, SQLVARCHAR);
+		
+		mssql_bind($stmt_prop, "RETVAL", $return, SQLINT2);
+
+		/* now execute the procedure */
+		$result_prop = mssql_execute($stmt_prop);
+	}
+	
+	function add_favorite($beer_id, $username) {
+		global $db;
+
+		$proc_prop = "usp_add_likes_beer";
+		$stmt_prop = mssql_init($proc_prop, $db);
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt_prop, "@beer_id", $beer_id, SQLINT2);    
+		mssql_bind($stmt_prop, "@username", $username, SQLVARCHAR);
+		
+		mssql_bind($stmt_prop, "RETVAL", $return, SQLINT2);
+
+		/* now execute the procedure */
+		$result_prop = mssql_execute($stmt_prop);
 	}
 	
 	public function region_name($region_id) {

@@ -14,6 +14,7 @@ $start = microtime(); ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/style.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/rating.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/auto.css">
 	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.jstepper.js"></script>
@@ -22,6 +23,7 @@ $start = microtime(); ?>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.constrain.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.rating.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.meta.js"></script>
+	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.autocomplete.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/global.js"></script>
 </head>
 
@@ -33,11 +35,11 @@ $start = microtime(); ?>
 			<h1><a href="<?php echo $_HOME; ?>">Beer</a></h1>
 			<ul>
 				<li class="browse"><a href="<?php echo $_HOME; ?>">Browse</a></li>
+				<li class="search"><a href="<?php echo $_HOME; ?>search">Search</a></li>
 	    		<?php 
 				if (!empty($_SESSION['logged_in']) || !empty($_SESSION['username'])) {
 				?>
 		    		<li class="submit"><a href="<?php echo $_HOME; ?>submit">Submit</a></li>
-		    		<li class="search"><a href="<?php echo $_HOME; ?>search">Search</a></li>
 					<li class="edit_profile" style="color: #fff"><a href="<?php echo $_HOME; ?>profiles/<?php echo $_SESSION['username']; ?>">View</a>/<a href="<?php echo $_HOME;?>profiles/edit">Edit</a> Profile</li>
 	    			<li class="logout"><a href="<?php echo $_HOME; ?>logout">Logout (<strong><?php echo $_SESSION['username']; ?></strong>)</a></li>
 	 	 		<?php

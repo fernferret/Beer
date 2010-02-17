@@ -49,7 +49,7 @@
 			}
 			else
 			{
-				echo "<br /><a style=\"width:100%\" class=\"iPush iBClassic\" rev=\"async\" href=\"ilovebeer.php?id=".$id." rev=\"async\">I Love This Beer! &lt;3</a>";
+				echo "<br /><a style=\"width:100%\" class=\"iPush iBClassic\" rev=\"async\" href=\"ilovebeer.php?id=".$id." rev=\"async\">I Love This Beer! <img src=\"img/love2.png\" /></a>";
 			}
 			
 			?>

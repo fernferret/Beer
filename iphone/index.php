@@ -4,7 +4,10 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == FALSE && strpos($_SERVER['H
 {
 	//header("Location: ../");
 }
-session_start();
+//session_start(); 
+	include "../includes/config.php";
+	include "../includes/db.php";
+	include "util/iphoneutil.php";
 ?>
 <html>
 	<head>
@@ -80,7 +83,6 @@ session_start();
 						</ul>
 						<h3>User Tasks</h3> 
 						<ul class="iArrow"> 
-							<li><a href="#_Register">Register</a></li>
 							<?php 
 								if(isset($_SESSION['logged_in']))
 								{?>
@@ -89,6 +91,7 @@ session_start();
 								}
 								else
 								{?>
+									<li><a href="#_Register">Register</a></li>
 									<li><a href="#_Login">Login</a></li>
 								<?php
 								}
@@ -115,15 +118,38 @@ session_start();
 					<div class="iFooter">
 						Beer. &copy; 2010
 					</div>
-				</div>
-				<div class="iLayer" id="waLogout" title="Logging Out...">
-					<div class="iBlock">
-						<p>Logging You out...</p>
+				</div> 
+				<div class="iLayer" id="waRegister" title="Register.">
+				<form rev="async" action="iregister.php" id="registerForm" onSubmit="return WA.Submit('registerForm');">
+					<div class="iPanel">
+					<fieldset>
+						<ul> 
+							<li><input type="text" name="bname" placeholder="Your Name" /></li>
+							<li><input type="text" name="bemail" placeholder="Your Email Address" /></li>
+							<li><input type="text" name="buname" placeholder="A Username" /></li>
+							<li><input type="password" name="bpass" placeholder="A Password" /></li>
+							<li><input type="password" name="bpassc" placeholder="Confirm That Password" /></li>
+							<li><select>
+							<?php
+							echo'<select name="bregion">';
+							$res = mssql_query("SELECT * FROM regions");
+							for($i=0;$i<mssql_num_rows($res);$i++) {
+								$row = mssql_fetch_assoc($res);
+								echo "<option>".$row["city"]."</option>";
+							}
+							echo'</select>';
+							?>
+							</select></li>
+							<li><input style="width:100%" type="submit" id="registersub" value="Register" class="iPush iBClassic"></li>
+						</ul>
+						</fieldset>
+						
 					</div>
+					</form>
 					<div class="iFooter">
 						Beer. &copy; 2010
 					</div>
-				</div>  
+				</div> 
 			</div>
 		</div>
 	</body>

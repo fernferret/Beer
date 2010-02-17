@@ -7,7 +7,7 @@
 
 	$f_beer = new Beer();
 
-    $beer_id = $_GET['id'];
+    $beer_id = str_replace("/", "", $_GET['id']);
       
     $res = mssql_query("SELECT * FROM beers WHERE beer_id = '".$beer_id."'");
 	$row = mssql_fetch_assoc($res);
@@ -30,7 +30,18 @@
 			<div class="shadow full">
 				<div class="beer">
 					<div>
-						<div class="beer_name"><a href="<?php echo $beer_id; ?>"><?php echo $beer; ?></a></div>
+						<div class="beer_name">
+							<a href="<?php echo $beer_id; ?>"><?php echo $beer; ?></a>
+							<?php
+								$res = mssql_query("SELECT * FROM loves_beer WHERE beer_id = '".$beer_id."' AND username = '".$username."'");
+								$row = mssql_fetch_assoc($res);
+								if($row) {
+									echo '<span id="f_'.$beer_id.'" class="favorite yes"><img src="../includes/images/favorite.png"></span>';
+								} else { 
+									echo '<span id="f_'.$beer_id.'" class="favorite no"><img src="../includes/images/favorite.png"></span>';
+								}
+							?>
+						</div>
 						<ul class="beer_attributes">
 							<?php 
 							if(!empty($aroma)) echo "<li>".$aroma."<span class='property_name'>Aroma</span><span class='property_desc'>What the aroma of the beer is</span></li>\n";
@@ -61,7 +72,7 @@
 							$row = mssql_fetch_assoc($res);					
 							if(!$row) {
 						?>
-								<form name="rating_submit" method="post" action="../beers/<?php echo $beer_id; ?>">
+								<form name="rating_submit" method="post" action="<?php echo $beer_id; ?>">
 						        	<p><input type="text" size="10" id="Form_Rating" class="rating_input" name="Form_Rating" value="" class="inputbox"><input style="width: 50px;" type="submit" id="rating_submit" name="rating_submit" value="Vote" class="g-button large"></p>			        
 					        	</form>
 					    <?php
@@ -84,18 +95,18 @@
 					
 					if($row) {
 					?>
-						<form name="edit_submit" method="post" action="../beers/edit/<?php echo $beer_id; ?>">
+						<form name="edit_submit" method="post" action="/edit/<?php echo $beer_id; ?>">
 					        <p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
 				        </form>
 			        <?php
 			        }
 			        ?>
-			        <form name="recommend_submit" method="post" action="../beers/edit/<?php echo $beer_id; ?>">
+			        <form name="recommend_submit" method="post" action="<?php echo $beer_id; ?>">
 				        <input id="recommend" name="recommend" value="Recommend" class="button" style="width: 198px">
 				        <input type="submit" id="recommend_submit" name="recommend_submit" value="Send" class="button">				
 				        <div id="to_recommend">
 				        	<label for="Form_To">To Who?<strong>*</strong></label>
-				        	<input type="password" id="Form_To" name="Form_To" value="" class="inputbox" style="width: 93%;">
+				        	<input type="text" id="Form_To" name="Form_To" value="" class="inputbox" style="width: 93%;">
 				        </div>
 			        </form>
 				</div>
@@ -121,15 +132,19 @@
 		</div>
 		
 		<div class="beers column span-17">
-			<div class="shadow">
+			<div class="shadow full">
 				<div class="page">
 					<ul id="comments">
-					<?php						
+					<?php					
 						$res = mssql_query("SELECT * FROM get_comments_for_beer WHERE beer_id = '".$beer_id."'");
 						$row = mssql_fetch_assoc($res);
 						$uname = $row["username"];
 						$time = $row["time"];
 						$text = $row["text"];
+						
+						$p_res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$uname."'");
+						$p_row = mssql_fetch_assoc($p_res);
+						$picture = $p_row["picture"];
 						
 						if (isset($_POST['comment_submit'])) {
 							$beer = new Beer();
@@ -142,14 +157,19 @@
 							echo "<div>No comments on this entry!</div>";
 						} else {
 							echo "<ul>";
-							echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+							echo "<img src='".$picture."' style='float:left; width: 80px; height: 90px; margin-right: 10px;'><div class='quote'>\"".$text."\"</div> <div class='q'><a href='../profiles/".$uname."'>".$uname."</a> said, at <i>".$time."</i></div";
 						}
 						
 						while($row = mssql_fetch_assoc($res)) {
 							$uname = $row["username"];
 							$time = $row["time"];
 							$text = $row["text"];
-							echo "<li class='q'><a href='profile.php?u=".$uname."'>".$uname."</a> says, <span class='quote'>\"".$text."\"</span> at <i>".$time."</i></li>";
+
+							$p_res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$uname."'");
+							$p_row = mssql_fetch_assoc($p_res);
+							$picture = $p_row["picture"];
+
+							echo "<img src='".$picture."' style='float:left; width: 80px; height: 90px; margin-right: 10px;'><div class='quote'>\"".$text."\"</div> <div class='q'><a href='../profiles/".$uname."'>".$uname."</a> said, at <i>".$time."</i></div";
 						}
 					
 						if(mssql_num_rows($res) != 0) {
@@ -157,9 +177,9 @@
 						}
 						
 					?>	
-					<form name="comment_submit" method="post" action="beer.php?id=<?php echo $beer_id; ?>">
+					<form name="comment_submit" method="post" action="../beers/<?php echo $beer_id; ?>">
 						<ul>
-							<li><label for="Form_Comment">Add a comment:</label> <input type="text" id="Form_Comment" name="Form_Comment" value="" class="inputbox"></li>
+							<li><label for="Form_Comment">Add a comment:</label> <textarea id="Form_Comment" name="Form_Comment" value="" class="inputbox" style="width: 100%;height: 120px;"></textarea></li>
 					        <br/>
 					        <li><input type="submit" id="comment_submit" name="comment_submit" value="Comment" class="button"></li>	
 				        </ul>

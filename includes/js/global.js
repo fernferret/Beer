@@ -11,7 +11,6 @@ $(document).ready(function() {
 		});
 	});
 	
-	
 	$("#Form_Search").constrain({ allow: { regex: "[a-zA-Z]"} });
 	
 	$(".beer_attributes li span").hide();
@@ -26,6 +25,63 @@ $(document).ready(function() {
 	); 
 	$("ul.beer_attributes li:even").addClass("alt");  
 
+	$(".favorites li span").hide();
+	$(".favorites li").hover( function () {  
+		$("span.remove_favorite",this).fadeIn("fast");
+	},  
+	function () {  
+		$("span.remove_favorite",this).fadeOut("fast");
+	}  
+	); 
+	$("ul.favorites li:even").addClass("alt");  
+
+	$(function(){
+		$(".remove_favorite").click(function(){
+			var id = $(this).attr('id');
+			$.ajax({
+				type: "POST",
+				data: "id="+id,
+				url: "http://spaceheater.dhcp.rose-hulman.edu/Beer/remove_fav.php",
+				success: function(msg)
+				{
+					$("li.fav_"+id).fadeOut();
+				}
+			});
+		});
+	});
+	
+	$(function(){
+		$(".favorite.yes").click(function(){
+			var id = $(this).attr('id').replace('f_','');
+			$.ajax({
+				type: "POST",
+				data: "id="+id,
+				url: "http://spaceheater.dhcp.rose-hulman.edu/Beer/remove_fav.php",
+				success: function(msg)
+				{;
+					$("#f_"+id).removeClass().addClass("favorite no");
+					location.reload();
+				}
+			});
+		});
+	});
+	
+	$(function(){
+		$(".favorite.no").click(function(){
+			var id = $(this).attr('id').replace('f_','');
+			$.ajax({
+				type: "POST",
+				data: "id="+id,
+				url: "http://spaceheater.dhcp.rose-hulman.edu/Beer/add_fav.php",
+				success: function(msg)
+				{
+					$("#f_"+id).removeClass().addClass("favorite yes");
+					location.reload();
+				}
+			});
+		});
+	});
+
 	$("#recommend_submit").hide();
 	$("#to_recommend").hide();
 	$('#recommend').click(function() {
@@ -34,7 +90,16 @@ $(document).ready(function() {
 		$("#to_recommend").slideDown();
 	});
 
-
+	$("#Form_To").autocomplete("http://spaceheater.dhcp.rose-hulman.edu/Beer/includes/auto.php", {
+		width: 200,
+		selectFirst: true
+	});
+	
+	$("#Form_Search").autocomplete("http://spaceheater.dhcp.rose-hulman.edu/Beer/includes/search_auto.php", {
+		width: 414,
+		selectFirst: true
+	});
+	
 	$('#Form_Password').keyup(function(){
 		var pass = passwordStrength($('#Form_Password').val(),$('#Form_Username').val());
 		$("#Form_Password").removeClass();

@@ -8,7 +8,9 @@
 		redirect("login");
 	}
 	
-    $username = $_GET['u'];
+    $username = str_replace("/", "", $_GET['u']);
+    
+    $logged_in_username = $_SESSION['username'];
     
     $res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$username."'");
 	$row = mssql_fetch_assoc($res);
@@ -39,11 +41,27 @@
 						<li><?php echo $user->region_name($region_id); ?></li>
 					</ul>	
 					<ul class="top_recommended">
-						<li style="text-align: center; background-color: #444; font-size: 28px;">Recommended Beers For You</li>
-						<li>1</li>
-						<li>2</li>
-						<li>3</li>
+						<li style="text-align: center; background-color: #444; font-size: 28px;">Beers You Might Like</li>
+						<?php
+						$res = mssql_query("SELECT * FROM ufn_likes_beer_recommend('".$username."')");
+						while ($r = mssql_fetch_assoc($res)) {
+							echo '<a href="../beers/'.$r["beer_id"].'"><li>'.$r["beer_name"].'</li></a>';
+						}
+						?>
 					</ul>
+					<ul class="favorites">
+						<li style="text-align: center; background-color: #444; font-size: 28px;">Favorite Beers</li>
+						<?php
+						$res = mssql_query("SELECT * FROM loves_beer WHERE username = '".$username."'");
+						while ($r = mssql_fetch_assoc($res)) {
+							echo '<li class="fav_'.$r["beer_id"].'"><a href="../beers/'.$r["beer_id"].'">'.$user->beer_name($r["beer_id"]).'</a>';
+							if($logged_in_username == $username)
+								echo '<span class="remove_favorite" id="'.$r["beer_id"].'">Remove</span>';
+							echo '</li>';
+						}
+						?>
+					</ul>
+					<div class="clear"></div>
 				</div>
 			</div>
 		</div>
@@ -102,25 +120,6 @@
 					<form name="send_email" method="post" action="mailto:<?php echo $email; ?>">
 				        <p><input type="submit" id="Send_Email" name="Send_Email" value="Email <?php echo $username; ?>" class="button"></p>			        
 			        </form>
-				</div>
-			</div>
-		</div>
-		<div class="beers column span-17">
-			<div class="shadow">
-				<div class="page">
-					<h2>Favorite Beers:</h2>
-					<ul class="white_list">
-						<?php
-							$results = $user->search($search);
-							foreach($results as $r) {
-								if($r['name'] != "") {
-									echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beers/'.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
-								}
-							}
-						?>
-				
-					</ul>
-					<div class="clear"></div>
 				</div>
 			</div>
 		</div>

@@ -99,7 +99,7 @@ class Beer
 		} else if($return==3) {
 			alert("Please enter a rating.", FALSE);
 		} else if($return==0) {
-			redirect('beer/'.$beer_id);
+			redirect('beers/'.$beer_id);
 		}
 	}
 	
@@ -120,7 +120,31 @@ class Beer
 		$result_prop = mssql_execute($stmt_prop);
 		
 		if($return==0) {
-			redirect('beer/'.$beer_id);
+			redirect('beers/'.$beer_id);
+		}
+		
+	}
+	
+	function add_recommendation($username, $to_user, $beer_id) {
+		global $db;
+
+		$proc_prop = "usp_add_recommendation";
+		$stmt_prop = mssql_init($proc_prop, $db);
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt_prop, "@from_user", $username, SQLVARCHAR);
+		mssql_bind($stmt_prop, "@to_user", $to_user, SQLVARCHAR);    
+		mssql_bind($stmt_prop, "@beer_id", $beer_id, SQLINT2);    
+		
+		mssql_bind($stmt_prop, "RETVAL", $return, SQLINT2);
+
+		/* now execute the procedure */
+		$result_prop = mssql_execute($stmt_prop);
+		
+		if($return==3) {
+			alert("Please choose a valid user!", FALSE);
+		} else if($return==0) {
+			alert("Beer recommendation sent!", TRUE);
 		}
 		
 	}

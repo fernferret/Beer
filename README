@@ -2,40 +2,8 @@ todo files:
 
 	SUBMIT
 	
-	BEER
-	
 	EDIT_BEER
-	
-	RECOMMENDATIONS/AUTO RECOMMENDATIONS
-	
+
 	BROWSE
-	
-	FAVORITES
 
-todo list:
-
-	recommendations
-		add button to each beer to 'recommend to'
-		query a list of beer_lovers to recommend
-		somehow notify the user he has a recommended beer
-			maybe an 'inbox'?
-			
-	cleanup php functions
-	
-	cleanup css containers
-	
-	replace SELECT queries in php with views
-	
-	fix the - inside of 5
-	
-	add a search user by region
-	
-	add upload picture
-		located just in edit_profile
-
-	refresh on modify_beer_lover
-	
-	fix search stored procedure
-		needs to return string
-		
-	
+	ADD REMOVE COMMENT IF LOGGED IN
