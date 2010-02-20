@@ -7,6 +7,7 @@ RewriteRule ^submit$ submit.php
 RewriteRule ^search$ search.php
 RewriteRule ^error$ error.php
 RewriteRule ^beers/(.*) beer.php?id=$1
+RewriteRule ^edit/(.*) edit_beer.php?id=$1
 RewriteRule ^profiles/edit$ edit_profile.php
 RewriteRule ^profiles/(.*) profile.php?u=$1
 

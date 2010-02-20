@@ -71,11 +71,9 @@
 						    $res = mssql_query("SELECT * FROM rates WHERE beer_id = '".$beer_id."' AND username = '".$username."'");
 							$row = mssql_fetch_assoc($res);					
 							if(!$row) {
-						?>
-								<form name="rating_submit" method="post" action="<?php echo $beer_id; ?>">
-						        	<p><input type="text" size="10" id="Form_Rating" class="rating_input" name="Form_Rating" value="" class="inputbox"><input style="width: 50px;" type="submit" id="rating_submit" name="rating_submit" value="Vote" class="g-button large"></p>			        
-					        	</form>
-					    <?php
+								echo '<form name="rating_submit" method="post" action="'.$beer_id.'">
+						        		<p><input type="text" size="10" id="Form_Rating" class="rating_input" name="Form_Rating" value="" class="inputbox"><input style="width: 50px;" type="submit" id="rating_submit" name="rating_submit" value="Vote" class="g-button large"></p>			        
+					        		  </form>';
 					    	}
 					    ?>
 					</div>
@@ -90,15 +88,11 @@
 						$f_beer->add_recommendation($username, $to_user, $beer_id);
 					}
 					
-					$res = mssql_query("SELECT * FROM beers WHERE submitted_by = '".$username."'");
-					$row = mssql_fetch_assoc($res);	
-					
-					if($row) {
-					?>
-						<form name="edit_submit" method="post" action="/edit/<?php echo $beer_id; ?>">
-					        <p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
-				        </form>
-			        <?php
+					$res = mssql_query("SELECT * FROM beers WHERE submitted_by = '".$username."' AND beer_id = '".$beer_id."'");
+					if(mssql_num_rows($res) != 0) {
+						echo '<form name="edit_submit" method="post" action="../edit/'.$beer_id.'">
+					        	<p><input type="submit" id="edit_submit" name="edit_submit" value="Edit Beer" class="button"></p>			        
+				        	  </form>';
 			        }
 			        ?>
 			        <form name="recommend_submit" method="post" action="<?php echo $beer_id; ?>">
@@ -140,7 +134,7 @@
 						$row = mssql_fetch_assoc($res);
 						$uname = $row["username"];
 						$time = $row["time"];
-						$text = $row["text"];
+						$text = str_replace('\\','',$row["text"]);
 						
 						$p_res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$uname."'");
 						$p_row = mssql_fetch_assoc($p_res);
@@ -163,7 +157,7 @@
 						while($row = mssql_fetch_assoc($res)) {
 							$uname = $row["username"];
 							$time = $row["time"];
-							$text = $row["text"];
+							$text = str_replace('\\','',$row["text"]);
 
 							$p_res = mssql_query("SELECT * FROM beer_lovers WHERE username = '".$uname."'");
 							$p_row = mssql_fetch_assoc($p_res);

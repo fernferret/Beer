@@ -1,3 +1,9 @@
+<?php
+if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== FALSE || strpos($_SERVER['HTTP_USER_AGENT'], 'iPod') !== FALSE)
+{
+	header("Location: iPhone");
+}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <?php 
 include "includes/config.php";
@@ -15,7 +21,8 @@ $start = microtime(); ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/style.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/rating.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/auto.css">
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $_HOME; ?>includes/css/table.css">
+
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.jstepper.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.livequery.js"></script>
@@ -25,6 +32,7 @@ $start = microtime(); ?>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.meta.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jquery.autocomplete.js"></script>
 	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/global.js"></script>
+	<script type="text/javascript" src="<?php echo $_HOME; ?>includes/js/jtable/js/jquery.dataTables.js"></script>
 </head>
 
 <body>

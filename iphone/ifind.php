@@ -24,6 +24,15 @@
 			{
 				$alreadyloves = false;
 			}
+			$res = mssql_query("SELECT * FROM dbo.ufn_auto_recommend(".$id.")");
+			$i = 0;
+			while ($r = mssql_fetch_assoc($res)) {
+				//echo '<a href="'.$r["beer_id"].'"><li>'.$r["beer_name"].'</li></a>';
+				
+				$recommend[$i] = "<li><a href=\"ifind.php?id=".$r['beer_id']."\" rev=\"async\">".$r['beer_name']."</a></li>";
+				$i++;
+			}
+			
 		?>
 	<title set="wa<?php echo $name_url; ?>"><?php echo $name; ?></title>
 	<go to="wa<?php echo $name_url; ?>" /> 
@@ -43,17 +52,28 @@
 				echo "<p><strong>".$attr['property_name'].": </strong>".$attr['description']." </p>";
 				}
 			}
-			if($alreadyloves)
+			echo "<h3>Like this beer? Try These!</h3></div>
+			<div class=\"iMenu\">
+						<ul class=\"iArrow\">";
+				
+			foreach($recommend as $newr)
 			{
-				echo "<br /><a style=\"width:100%\" class=\"iPush iBWarn\" rev=\"async\" href=\"ilovebeer.php?id=".$id."&unlove=true rev=\"async\">I don't love this beer :(</a>";
+				echo $newr;
 			}
-			else
+			echo "</ul></div>";
+			if(isset($_SESSION['username']))
 			{
-				echo "<br /><a style=\"width:100%\" class=\"iPush iBClassic\" rev=\"async\" href=\"ilovebeer.php?id=".$id." rev=\"async\">I Love This Beer! <img src=\"img/love2.png\" /></a>";
+				if($alreadyloves)
+				{
+					echo "<br /><a style=\"width:100%\" class=\"iPush iBWarn\" rev=\"async\" href=\"ihatebeer.php?beerid=".$id." rev=\"async\">I don't love this beer :(</a>";
+				}
+				else
+				{
+					echo "<br /><a style=\"width:100%\" class=\"iPush iBClassic\" rev=\"async\" href=\"ilovebeer.php?beerid=".$id." rev=\"async\">I Love This Beer! <img src=\"img/love2.png\" /></a>";
+				}
 			}
-			
 			?>
-			</div> 
+			
 		]]></data> 
 	</part>  
 </root> 

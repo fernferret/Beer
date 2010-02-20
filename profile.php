@@ -8,7 +8,7 @@
 		redirect("login");
 	}
 	
-    $username = str_replace("/", "", $_GET['u']);
+    $username = $_GET['u'];
     
     $logged_in_username = $_SESSION['username'];
     
@@ -40,27 +40,41 @@
 						<li><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></li>
 						<li><?php echo $user->region_name($region_id); ?></li>
 					</ul>	
-					<ul class="top_recommended">
-						<li style="text-align: center; background-color: #444; font-size: 28px;">Beers You Might Like</li>
-						<?php
-						$res = mssql_query("SELECT * FROM ufn_likes_beer_recommend('".$username."')");
-						while ($r = mssql_fetch_assoc($res)) {
-							echo '<a href="../beers/'.$r["beer_id"].'"><li>'.$r["beer_name"].'</li></a>';
-						}
-						?>
-					</ul>
 					<ul class="favorites">
 						<li style="text-align: center; background-color: #444; font-size: 28px;">Favorite Beers</li>
 						<?php
-						$res = mssql_query("SELECT * FROM loves_beer WHERE username = '".$username."'");
-						while ($r = mssql_fetch_assoc($res)) {
+						$favorites = TRUE;
+						$res = mssql_query("SELECT * FROM loves_beer WHERE username = '".$username."'"); 
+						while ($r = mssql_fetch_assoc($res)){
 							echo '<li class="fav_'.$r["beer_id"].'"><a href="../beers/'.$r["beer_id"].'">'.$user->beer_name($r["beer_id"]).'</a>';
 							if($logged_in_username == $username)
 								echo '<span class="remove_favorite" id="'.$r["beer_id"].'">Remove</span>';
 							echo '</li>';
 						}
+						if(mssql_num_rows($res) == 0) {
+							echo "No favorites found!";
+							$favorites = FALSE;
+						} else {
+							$favorites = TRUE;
+						}
 						?>
 					</ul>
+					
+					<ul class="top_recommended">
+						<li style="text-align: center; background-color: #444; font-size: 28px;">Beers You Might Like</li>
+						<?php
+						$res = mssql_query("SELECT * FROM ufn_likes_beer_recommend('".$username."')");
+						$rew = mssql_fetch_assoc($res);
+						if(mssql_num_rows($res) != 0 && $favorites) {
+							while ($r = mssql_fetch_assoc($res)) {
+								echo '<a href="../beers/'.$r["beer_id"].'"><li>'.$r["beer_name"].'</li></a>';
+							}
+						} else {						
+							echo "No recommendations found!";
+						}
+						?>
+					</ul>
+					
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -76,14 +90,14 @@
 						if(mssql_num_rows($to_res) != 0) {
 							for($i=0;$i<mssql_num_rows($to_res);$i++) {
 								$row = mssql_fetch_assoc($to_res);
-								echo "<li><a href='../beers/".$row["beer_id"]."'>".$user->beer_name($row["beer_id"])."</a> from <a href='".$row["from_user"]."'>".$row["from_user"]."</a></li>\n";
+								echo "<li><a href='../beers/".$row["beer_id"]."'>".truncate($user->beer_name($row["beer_id"]),9)."</a> from <a href='".$row["from_user"]."'>".truncate($row["from_user"],9		)."</a></li>\n";
 							}
 						} 
 						$from_res = mssql_query("SELECT TOP 5 * FROM recommends WHERE from_user = '".$username."'");
 						if(mssql_num_rows($from_res) != 0) {
 							for($i=0;$i<mssql_num_rows($from_res);$i++) {
 								$row = mssql_fetch_assoc($from_res);
-								echo "<li><a href='../beers/".$row["beer_id"]."'>".$user->beer_name($row["beer_id"])."</a> to <a href='".$row["to_user"]."'>".$row["to_user"]."</a></li>\n";
+								echo "<li><a href='../beers/".$row["beer_id"]."'>".truncate($user->beer_name($row["beer_id"]),9)."</a> to <a href='".$row["to_user"]."'>".truncate($row["to_user"],9)."</a></li>\n";
 							}
 						}
 						if(mssql_num_rows($from_res) == 0 && mssql_num_rows($to_res) == 0) {
@@ -102,6 +116,14 @@
 								echo "<li><a href='../beers/".$row["beer_id"]."'>".$row["name"]."</a></li>\n";
 							}
 						}
+						if(mssql_num_rows($last_res) == 0) {
+							echo "No beers submitted, <a href='../submit'>yet</a>!";
+						}
+						echo'</ul>';
+					?>
+					<br/><h1>Commented Beers:</h1>
+					<?php
+						echo'<ul class="commented_beers">';
 						$com_res = mssql_query("SELECT TOP 5 * FROM comments_on WHERE username = '".$username."'");
 						if(mssql_num_rows($com_res) != 0) {
 							for($i=0;$i<mssql_num_rows($com_res);$i++) {
@@ -109,8 +131,8 @@
 								echo "<li><a href='../beers/".$row["beer_id"]."'>".$user->beer_name($row["beer_id"])."</a></li>\n";
 							}
 						}
-						if(mssql_num_rows($last_res) == 0 && mssql_num_rows($com_res) == 0) {
-							echo "No beers submitted, <a href='../submit'>yet</a>!";
+						if(mssql_num_rows($com_res) == 0) {
+							echo "No comments submitted!";
 						}
 						echo'</ul>';
 					?>

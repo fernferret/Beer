@@ -18,11 +18,7 @@ class Adminhelp
 		global $db;
 		$proc = "usp_add_beer_to_vendor";
 		$stmt = mssql_init($proc, $db);
-		
-		//$res = mssql_query("SELECT * FROM regions WHERE City = '".$region_id."'");
-		//$row = mssql_fetch_assoc($res);
-		//$region_id = $row["region_id"];
-				
+
 		/* now bind the parameters to it */
 		mssql_bind($stmt, "@beer_id", $beerid, SQLINT2);
 		mssql_bind($stmt, "@vend_id", $vendid, SQLINT2);  	
@@ -34,7 +30,6 @@ class Adminhelp
 	
 		if($return == 0) { 
 			alert("Beer Successfully added!", TRUE);
-			//echo '<meta http-equiv="refresh" content="0;admin.php">'; //refresh the page to see if membership worked.
 		} else if($return == 1)
 			alert("You must enter a valid Beer ID", FALSE);
 		else if($return == 2)

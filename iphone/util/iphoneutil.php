@@ -19,16 +19,16 @@ class iPhone
 		$proc = "usp_add_beer_lover";
 		$stmt = mssql_init($proc, $db);
 		
-		$res = mssql_query("SELECT * FROM regions WHERE City = '".$region_id."'");
-		$row = mssql_fetch_assoc($res);
-		$region_id = $row["region_id"];
+		//$res = mssql_query("SELECT * FROM regions WHERE City = '".$region_id."'");
+		//$row = mssql_fetch_assoc($res);
+		//$region_id = $row["region_id"];
 		
 		date_default_timezone_set('UTC');
 		$date_joined = date("m/d/y");
 		
 		if(!isValidEmail($email)) {
-			alert("You must enter a valid email address!", FALSE);
-			return 0;
+			//alert("You must enter a valid email address!", FALSE);
+			return "1You must enter a valid email address!";
 		}
 				
 		/* now bind the parameters to it */
@@ -48,14 +48,42 @@ class iPhone
 		if($return == 0) { 
 			$_SESSION['username'] = $username;
 			$_SESSION['logged_in'] = 1;
-			alert("Successfully registered as " . $_SESSION['username'], TRUE);
-			echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
+			return "0Successfully registered as " . $_SESSION['username'].":".$result;//alert("Successfully registered as " . $_SESSION['username'], TRUE);
+			//echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
 		} else if($return == 1)
-			alert("You must enter a valid username, password, and email!", FALSE);
+			return "1You must enter a valid username, password, and email!";
 		else if($return == 2)
-			alert("That username is already taken!", FALSE);
+			return "1That username is already taken!";
 		else if($return == 3)
-			alert("That email address is already taken!", FALSE);
+			return "1That email address is already taken!";
+	}
+	
+		function lovebeer($username, $beerid) {
+		global $db;
+		$proc = "usp_add_likes_beer";
+		$stmt = mssql_init($proc, $db);
+		
+				
+		/* now bind the parameters to it */
+		mssql_bind($stmt, "@beer_id", $beerid, SQLINT2);
+		mssql_bind($stmt, "@username", $username, SQLVARCHAR);   	
+
+		mssql_bind($stmt, "RETVAL", $return, SQLINT2);
+	
+		/* now execute the procedure */
+		$result = mssql_execute($stmt);
+	
+		if($return == 0) { 
+			$_SESSION['username'] = $username;
+			$_SESSION['logged_in'] = 1;
+			return "0Successfully registered as " . $_SESSION['username'].":".$result;//alert("Successfully registered as " . $_SESSION['username'], TRUE);
+			//echo '<meta http-equiv="refresh" content="0;index.php">'; //refresh the page to see if membership worked.
+		} else if($return == 1)
+			return "1You must enter a valid username, password, and email!";
+		else if($return == 2)
+			return "1That username is already taken!";
+		else if($return == 3)
+			return "1That email address is already taken!";
 	}
 	
 	function modify_beer_lover($name, $email, $address, $username, $password, $region_id, $picture) {
@@ -162,13 +190,13 @@ class iPhone
 	}
 	public function showBeerById($id) {
 		$column = "beer_id";
-		$query = "select * from beers where $column like \"%$id%\" order by $column";
+		$query = "select * from beers where $column = $id order by $column";
 		$result = mssql_query($query);
 		//echo "<h1>Results:</h1>\n";
 		if($result) {
 			$r['Beer'] = mssql_fetch_assoc($result);
 			
-			$query = "select * from [has_property] where [beer_id] like \"%$id%\"";
+			$query = "select property.name AS property_name, has_property.[description] FROM [has_property] JOIN [property] ON property.property_id = [has_property].property_id where [beer_id] = $id";
 			$result = mssql_query($query);
 			$i = 0;
 			while($r['Attr'][$i] = mssql_fetch_assoc($result))

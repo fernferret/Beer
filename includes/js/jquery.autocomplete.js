@@ -67,7 +67,7 @@ $.Autocompleter = function(input, options) {
 
 	// Create $ object for input element
 	var $input = $(input).attr("autocomplete", "off").addClass(options.inputClass);
-
+	
 	var timeout;
 	var previousValue = "";
 	var cache = $.Autocompleter.Cache(options);
@@ -133,9 +133,20 @@ $.Autocompleter = function(input, options) {
 			// matches also semicolon
 			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
 			case KEY.TAB:
-			case KEY.RETURN:
-				if( selectCurrent() ) {
+				if( selectCurrent("false") ) {
 					// stop default to prevent a form submit, Opera needs special handling
+					event.preventDefault();
+					blockSubmit = true;
+					return false;
+				}
+				break;
+			case KEY.RETURN:
+				if( selectCurrent("true") ) {
+					// stop default to prevent a form submit, Opera needs special handling
+					//if($input.val() != '')
+					//{
+					//	$('form.acomplete').submit();
+					//}
 					event.preventDefault();
 					blockSubmit = true;
 					return false;
@@ -198,7 +209,7 @@ $.Autocompleter = function(input, options) {
 	});
 	
 	
-	function selectCurrent() {
+	function selectCurrent(dosubmit) {
 		var selected = select.selected();
 		if( !selected )
 			return false;
@@ -217,6 +228,10 @@ $.Autocompleter = function(input, options) {
 		$input.val(v);
 		hideResultsNow();
 		$input.trigger("result", [selected.data, selected.value]);
+		if(dosubmit == 'true')
+		{
+			//$('form.acomplete').submit();
+		}
 		return true;
 	}
 	
@@ -298,6 +313,7 @@ $.Autocompleter = function(input, options) {
 						if (options.multiple) {
 							var words = trimWords($input.val()).slice(0, -1);
 							$input.val( words.join(options.multipleSeparator) + (words.length ? options.multipleSeparator : "") );
+							//$('form.acomplete').submit();
 						}
 						else
 							$input.val( "" );
@@ -577,6 +593,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			    $(target(event)).addClass(CLASSES.ACTIVE);            
 	        }
 		}).click(function(event) {
+			// Submit form data HERE
+			//$('form.acomplete').submit()
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
 			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
@@ -642,10 +660,18 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		for (var i=0; i < max; i++) {
 			if (!data[i])
 				continue;
-			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
+			//var realval = data[i].value;
+			//var splitter = realval.split("\'");
+			//alert(splitter[0]);
+			//var realstring = splitter[0];
+			//data[i].value = splitter[0];
+			//alert(data[i].value);
+			var formatted = options.formatItem(data[i].data, i+1, max,data[i].value, term);
 			if ( formatted === false )
 				continue;
 			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+			//alert(data[i].value);
+			//data[i].data = splitter[0];
 			$.data(li, "ac_data", data[i]);
 		}
 		listItems = list.find("li");

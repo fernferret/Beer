@@ -12,8 +12,10 @@ if(isset($_SESSION['username']))
 }
 else
 {
+	$username = $_GET['buname'];
+	$pass = $_GET['bpass'];
 			$phone = new iPhone();
-			$results = $phone->login($_GET['buname'],$_GET['bpass']);
+			$results = $phone->login($username,$pass);
 			//$name = $results['name'];
 			//$id = $results['beer_id'];
 		?> 
@@ -23,7 +25,7 @@ else
 		
 		<data><![CDATA[
 			<div class="iBlock">
-			<h3>Search Results</h3> 
+			<h3>Login Results</h3> 
 				<?php
 				if($results != "-1")
 				{ ?>

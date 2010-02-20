@@ -7,6 +7,8 @@
     if (empty($_SESSION['logged_in']) || empty($_SESSION['username'])) {
 		redirect("login");
 	}
+								
+	$beer = new Beer();
 ?>
 <div class="container">
     <div class="column span-24">
@@ -22,37 +24,29 @@
 							$filtered = $_POST['Form_Filtered'];
 							$weight = $_POST['Form_Weight'];
 							$hoppiness = $_POST['Form_Hoppiness'];
-							$finish = $_POST['Form_Finish'];
+							$bitterness = $_POST['Form_Bitterness'];
 							$color = $_POST['Form_Color'];
 							$clarity = $_POST['Form_Clarity'];
 							$type = $_POST['Form_Type'];
 							$head = $_POST['Form_Head'];
 							$alcohol = $_POST['Form_AlcoholContent'];
 							$username = $_SESSION["username"];
-							
-							$beer = new Beer();
-							$beer->add_beer($name, $aroma, $filtered, $weight, $hoppiness, $finish, $color, $clarity, $type, $head, $alcohol, $username);
+
+							$beer->add_beer($name, $aroma, $filtered, $weight, $hoppiness, $bitterness, $color, $clarity, $type, $head, $alcohol, $username);
 						} 
 						?>
                         <div>
                             <ul>
-                            	<li><label for="Form_Name">Beer Name <strong>*</strong> </label> <input type="text" id="Form_Name" name="Form_Name" value="" class="inputbox"></li>
-                                <li><label for="Form_Aroma">Aroma</label> <input type="text" id="Form_Aroma" name="Form_Aroma" value="" class="inputbox"></li>
-                                <li><label for="Form_Filtered">Filtered</label> <input type="text" id="Form_Filtered" name="Form_Filtered" value="" class="inputbox"></li>
-                                <?php
-									$res = mssql_query("SELECT * FROM property");
-									for($i=0;$i<mssql_num_rows($res);$i++) {
-										$row = mssql_fetch_assoc($res);
-										echo '<li>
-												<label for="Form_'.$row["name"].'">'.$row["name"].'</label> 
-												<input type="text" id="Form_'.$row["name"].'" name="Form_'.$row["name"].'" value="" class="inputbox">
-											  </li>';
-									}
-								//SELECT * FROM view_property_attributes WHERE property_id = 7
+                            	<li><label for="Form_Name">Beer Name<strong>*</strong> </label> <input type="text" id="Form_Name" name="Form_Name" value="" class="inputbox"><span>← The name of the beer.</span></li>
+                                <li><label for="Form_Aroma">Aroma</label> <input type="text" id="Form_Aroma" name="Form_Aroma" value="" class="inputbox"><span>← The aroma of the beer.</span></li>
+                                <li><label for="Form_Filtered">Filtered</label> <input type="text" id="Form_Filtered" name="Form_Filtered" value="" class="inputbox"><span>← If the beer is filtered or not.</span></li>
+								<?php 
+								$res = mssql_query("SELECT * FROM property");
+								while ($row = mssql_fetch_assoc($res)) {
+									$beer->property_values('', $row["property_id"]);
+								}
 								?>
-								
-								
-                                <br />
+                                <br /><br />
                          		<li><input type="submit" id="Form_Submit" name="Form_Submit" value="Submit" class="button"></li>
                             </ul>
                             <br />

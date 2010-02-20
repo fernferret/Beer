@@ -49,7 +49,7 @@ class User
 			$_SESSION['username'] = $username;
 			$_SESSION['logged_in'] = 1;
 			alert("Successfully registered as " . $_SESSION['username'], TRUE);
-			redirect("/"); //refresh the page to see if membership worked.
+			redirect(""); //refresh the page to see if membership worked.
 		} else if($return == 1)
 			alert("You must enter a valid username, password, and email!", FALSE);
 		else if($return == 2)
@@ -109,7 +109,7 @@ class User
 			$_SESSION['logged_in'] = 1;
 			
 			alert("Successfully logged in as " . $_SESSION['username'], TRUE);
-			redirect("/"); //refresh the page to see if membership worked.
+			redirect(""); //refresh the page to see if membership worked.
 		} else if($return == 1 || $return == 2) {
 			alert("You need to enter a valid username/password!", FALSE);
 		}

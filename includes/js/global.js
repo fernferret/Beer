@@ -1,5 +1,5 @@
 $(document).ready(function() {  
-	$("input.rating_input").jStepper({minValue:0, maxValue:5});
+	$("input.rating_input").jStepper({minValue:1, maxValue:5});
 	$("input.rating_input").numeric();
 	
 	$('input.inputbox').livequery(function() {
@@ -11,7 +11,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$("#Form_Search").constrain({ allow: { regex: "[a-zA-Z]"} });
+	$("#Form_Search").constrain({ allow: { regex: "[a-zA-Z ]"} });
 	
 	$(".beer_attributes li span").hide();
 	$(".beer_attributes li").hover( function () {  
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		$("span.remove_favorite",this).fadeOut("fast");
 	}  
 	); 
-	$("ul.favorites li:even").addClass("alt");  
+	$("ul.white_list li:even").addClass("alt");  
 
 	$(function(){
 		$(".remove_favorite").click(function(){
@@ -119,3 +119,5 @@ $(document).ready(function() {
 		}
 	});
 });
+
+

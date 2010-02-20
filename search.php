@@ -8,8 +8,8 @@
 		<div class="column span-24">			
 			<div class="shadow">
 				<div class="page" id="search">
-					<h2>Search for a <strong>beer!</strong></h2>
-					<form name="search" method="post" action="search">
+					<h2>Search for a <strong>Beer!</strong></h2>
+					<form class="acomplete" name="search" method="post" action="search">
 					<?php 
 						if (isset($_POST['Form_Submit'])) {	
 							$search = $_POST["Form_Search"];
@@ -17,7 +17,7 @@
 							$results = $user->search($search);
 							foreach($results as $r) {
 								if($r['name'] != "") {
-									echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beer.php?id='.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
+									echo '<br><span style="font-size: 36px; margin-left: 15px"><strong><a href="beers/'.$r["beer_id"].'">'.$r["name"].'</a></strong></span>';
 								}
 							}
 						} 

@@ -9,7 +9,7 @@ $data = mssql_query( "SELECT * FROM beers" );
 
 while( $row = mssql_fetch_array( $data )){
 	if ( strpos( strtolower( $row['name'] ), $q ) !== false ) {
-		echo $row['name'] . "\n";
+		echo $row['name']. "\n";
 	}
 }
 

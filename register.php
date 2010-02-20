@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="shadow">
         <div class="page" id="register">
-	        <h2>Sign up to get your own Beer account.</h2>
+	        <h2>Sign up to get your own Beer account</h2>
 	        <form name="register" method="post" action="<?php ECHO $_SERVER['PHP_SELF']; ?>">
 	            <?php 
 				if (isset($_POST['Form_Register'])) {	
